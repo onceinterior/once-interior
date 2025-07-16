@@ -6,9 +6,9 @@ export default function Header() {
             <div className="max-w-6xl mx-auto flex justify-between items-center">
                 <h1 className="text-2xl font-bold">ONCE INTERIOR</h1>
                 <nav className="space-x-6">
-                    <Link href="/" className="hover:underline">홈</Link>
                     <Link href="/about" className="hover:underline">회사소개</Link>
-                    <Link href="/portfolio" className="hover:underline">포트폴리오</Link>
+                    <Link href="/house" className="hover:underline">주거공간</Link>
+                    <Link href="/industry" className="hover:underline">상업공간</Link>
                     <Link href="/contact" className="hover:underline">문의하기</Link>
                 </nav>
             </div>
