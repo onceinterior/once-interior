@@ -8,23 +8,23 @@ export default function Footer() {
                 <div className="space-y-2">
                     <div className="flex">
                         <span className="w-28 font-semibold">상호명</span>
-                        <span> 원스인테리어</span>
+                        <span>원스인테리어</span>
                     </div>
                     <div className="flex">
                         <span className="w-28 font-semibold">대표자</span>
-                        <span> 원기봉</span>
+                        <span>원기봉</span>
                     </div>
                     <div className="flex">
                         <span className="w-28 font-semibold">사업자등록번호</span>
-                        <span> 000-0000-00000</span>
+                        <span>865-10-01104</span>
                     </div>
                     <div className="flex">
                         <span className="w-28 font-semibold">영업시간</span>
-                        <span> 월~토 08:00 ~ 20:00</span>
+                        <span>월~토 08:00 ~ 20:00</span>
                     </div>
                     <div className="flex">
                         <span className="w-28 font-semibold">주소</span>
-                        <span> 서울 도봉구 방학로 183 (유덕기내과 상가 1층)</span>
+                        <span>서울 도봉구 방학로 183 (유덕기내과 상가 1층)</span>
                     </div>
                 </div>
 

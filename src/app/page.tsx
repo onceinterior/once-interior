@@ -13,8 +13,8 @@ export default function Home() {
                 {/*    className="object-cover"*/}
                 {/*/>*/}
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
-                    <h1 className="text-5xl font-bold mb-4">원스 인테리어</h1>
-                    <p className="text-lg">당신의 공간을 새롭게 디자인합니다</p>
+                    <h1 className="text-5xl font-bold mb-4">ONCE INTERIOR</h1>
+                    <h2 className="text-3xl">고객님을 위한 단 하나의 인테리어</h2>
                 </div>
             </section>
 
