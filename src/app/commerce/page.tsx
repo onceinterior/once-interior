@@ -1,8 +1,8 @@
-export default function About() {
+export default function Commerce() {
     return (
         <div>
             <section className="bg-gray-300 py-24 text-center px-4 text-white">
-                <h1 className="text-4xl font-bold mb-4">회사 소개</h1>
+                <h1 className="text-4xl font-bold mb-4">상업 공간</h1>
             </section>
         </div>
     );
