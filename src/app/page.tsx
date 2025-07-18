@@ -6,12 +6,12 @@ export default function Home() {
 
             {/* Hero Section */}
             <section className="relative w-full h-screen">
-                {/*<Image*/}
-                {/*    src="/hero.jpg" // 배경 이미지*/}
-                {/*    alt="Hero"*/}
-                {/*    fill*/}
-                {/*    className="object-cover"*/}
-                {/*/>*/}
+                <Image
+                    src="/image/banner.jpg"
+                    alt="Hero"
+                    fill
+                    className="object-cover"
+                />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
                     <h1 className="text-5xl font-bold mb-4">ONCE INTERIOR</h1>
                     <h2 className="text-3xl">고객님을 위한 단 하나의 인테리어</h2>

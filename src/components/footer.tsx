@@ -1,10 +1,11 @@
+import Image from "next/image";
+
 export default function Footer() {
     return (
         <footer className="bg-white text-[#444] text-sm leading-relaxed">
             <div className="max-w-3xl mx-auto px-4 py-12 text-center space-y-4">
-                {/* ONCE INTERIOR 로고 이미지 (대체 예정) */}
-                <div>
-                    <img src="/logo-footer.png" alt="ONCE INTERIOR LOGO IMAGE" className="mx-auto h-6" />
+                <div className="flex items-center justify-center w-full">
+                    <Image src="/image/title-logo.jpg" alt="footer_logo" width={500} height={400} />
                 </div>
 
                 <div className="text-[13px] text-[#666] space-y-1">
