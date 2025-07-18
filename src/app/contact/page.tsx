@@ -7,11 +7,14 @@ export default function Contact() {
         <div>
             {/* CTA 영역 */}
             <section className="bg-gray-300 py-24 text-center px-4 text-white">
-                <h1 className="text-4xl font-bold mb-4">고객상담 및 문의</h1>
-                <p className="text-lg">
-                    원스인테리어는 항상 열려 있습니다.<br />
-                    친절히 상담해드리겠습니다.
-                </p>
+                <h1
+                    className="text-4xl font-bold mb-4"
+                    style={{
+                        textShadow: "1px 1px 1px rgba(0, 0, 0, 0.3)",
+                    }}
+                >
+                    고객상담 및 문의
+                </h1>
             </section>
 
             {/* 정보 + 버튼 영역 */}
