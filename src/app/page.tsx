@@ -5,7 +5,7 @@ export default function Home() {
         <div className="text-[#333]">
 
             {/* Hero Section */}
-            <section className="relative w-full h-screen">
+            <section className="relative w-full h-[600px]">
                 <Image
                     src="/image/banner.jpg"
                     alt="Hero"
@@ -25,13 +25,13 @@ export default function Home() {
                     {/* 실제 이미지로 교체 */}
                     {[...Array(6)].map((_, i) => (
                         <div key={i} className="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
-                            {/*<Image*/}
-                            {/*    src={`/gallery/img${i + 1}.jpg`}*/}
-                            {/*    alt={`시공 이미지 ${i + 1}`}*/}
-                            {/*    width={600}*/}
-                            {/*    height={600}*/}
-                            {/*    className="object-cover w-full h-full"*/}
-                            {/*/>*/}
+                            <Image
+                                src={`/gallery/img${i + 1}.jpg`}
+                                alt={`시공 이미지 ${i + 1}`}
+                                width={600}
+                                height={600}
+                                className="object-cover w-full h-full"
+                            />
                         </div>
                     ))}
                 </div>
@@ -41,7 +41,7 @@ export default function Home() {
             <section className="relative h-[500px] w-full">
                 <Image
                     src="/menu-bg.jpg" // 배경 이미지
-                    alt="소개 배경"
+                    alt="소개 배경 이미지 추가 필요"
                     fill
                     className="object-cover"
                 />

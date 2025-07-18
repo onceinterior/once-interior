@@ -21,7 +21,7 @@ export default function Contact() {
                     <div className="flex justify-center pt-6">
                         <button
                             onClick={() =>
-                                window.open("https://open.kakao.com/o/sAfYyKLg", "_blank")
+                                window.open("https://open.kakao.com/o/random", "_blank") // TODO 수정 필요
                             }
                             className="bg-[#FEE500] text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#F5DC00] transition flex items-center gap-2 hover:cursor-pointer"
                         >
