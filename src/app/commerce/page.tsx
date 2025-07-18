@@ -25,10 +25,9 @@ export default function Commerce() {
                 </h1>
             </section>
 
-
             {/* 갤러리 */}
             <section className="max-w-6xl mx-auto px-4 py-20">
-                <h2 className="text-2xl font-semibold mb-10 text-center text-gray-800">시공 사례</h2>
+                <h2 className="text-3xl font-semibold mb-10 text-center text-gray-800">시공 사례</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-16">
                     {galleryItems.map((item, index) => (
                         <div key={index} className="group">
@@ -39,7 +38,6 @@ export default function Commerce() {
                                     fill
                                     className="object-cover transition duration-300 group-hover:brightness-110"
                                 />
-                                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
                             </div>
                             <p className="mt-4 text-center text-lg text-gray-900">{item.title}</p>
                         </div>
