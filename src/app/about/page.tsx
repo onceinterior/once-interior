@@ -18,7 +18,7 @@ export default function About() {
                             textShadow: "1px 1px 1px rgba(0, 0, 0, 0.3)",
                         }}
                     >
-                        회사 소개
+                        About Once
                     </h1>
                 </div>
             </section>
