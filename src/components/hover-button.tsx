@@ -9,7 +9,7 @@ export default function ConsultHoverButton() {
             onClick={() =>
                 window.open("https://open.kakao.com/me/once_interior", "_blank")
             }
-            className="fixed bottom-6 right-6 bg-yellow-300 p-5 rounded-full shadow-lg cursor-pointer"
+            className="fixed bottom-6 right-6 bg-yellow-300 p-5 rounded-full drop-shadow-lg cursor-pointer"
         >
             <ChatBubbleLeftRightIcon className="w-7 h-7 text-black" />
         </button>
