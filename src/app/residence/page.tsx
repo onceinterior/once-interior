@@ -1,12 +1,7 @@
 import Image from "next/image";
+import {residenceGalleryItems} from "@/data/residenceData";
 
 export default function Residence() {
-    const galleryItems = [
-        { src: "/image/residence/금호2동_28평.jpg", title: "금호2동 28평" },
-        { src: "/image/residence/신동아19동_40평.jpg", title: "신동아19동 40평" },
-        { src: "/image/residence/쌍문_동익4동_24평.jpg", title: "쌍문 동익4동 24평" },
-    ];
-
     return (
         <div>
             {/* 상단 헤더 */}
@@ -38,7 +33,7 @@ export default function Residence() {
                     <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-16">
-                        {galleryItems.map((item, index) => (
+                        {residenceGalleryItems.map((item, index) => (
                             <div key={index} className="group">
                                 <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
                                     <Image
@@ -56,6 +51,4 @@ export default function Residence() {
             </section>
         </div>
     );
-
-
 }
