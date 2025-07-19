@@ -20,7 +20,7 @@ export default function FadeUpImageWrapper({ children, delay = 0 }: FadeUpImageW
                     observer.disconnect();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.5 }
         );
 
         if (ref.current) {
