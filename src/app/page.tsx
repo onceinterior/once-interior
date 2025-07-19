@@ -1,8 +1,11 @@
 import Image from "next/image";
 import {residenceGalleryItems} from "@/data/residenceData";
 import {commerceGalleryItems} from "@/data/commerceData";
+import FadeUpImageWrapper from "@/components/fade-up-animation";
 
 export default function Home() {
+    const combinedGalleryItems = [...residenceGalleryItems, ...commerceGalleryItems];
+
     return (
         <div>
             {/* Hero Section */}
@@ -22,35 +25,22 @@ export default function Home() {
             {/* Gallery Section */}
             <section className="max-w-6xl mx-auto px-4 py-20">
                 <h2 className="text-3xl font-bold text-center mb-10">시공 갤러리</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-                    {residenceGalleryItems.map((item, index) => (
-                        <div key={index} className="group">
-                            <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
-                                <Image
-                                    src={item.src}
-                                    alt={item.title}
-                                    fill
-                                    className="object-cover transition duration-300 group-hover:brightness-110"
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {commerceGalleryItems.map((item, index) => (
-                        <div key={index} className="group">
-                            <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
-                                <Image
-                                    src={item.src}
-                                    alt={item.title}
-                                    fill
-                                    className="object-cover transition duration-300 group-hover:brightness-110"
-                                />
+                    {combinedGalleryItems.map((item, index) => (
+                        <FadeUpImageWrapper key={index} delay={index * 50}>
+                            <div key={index} className="group">
+                                <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                    <Image
+                                        src={item.src}
+                                        alt={item.title}
+                                        fill
+                                        className="object-cover transition duration-300 group-hover:brightness-110"
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        </FadeUpImageWrapper>
                     ))}
                 </div>
-
             </section>
 
             {/* Description Section */}
