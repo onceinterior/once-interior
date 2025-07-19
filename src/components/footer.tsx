@@ -5,7 +5,7 @@ export default function Footer() {
         <footer className="bg-white text-[#444] text-sm leading-relaxed">
             <div className="max-w-3xl mx-auto px-4 py-12 text-center space-y-4">
                 <div className="flex items-center justify-center w-full">
-                    <Image src="/image/title-logo.jpg" alt="footer_logo" width={500} height={400} />
+                    <Image src="/image/logo.jpg" alt="footer_logo" width={500} height={400} />
                 </div>
 
                 <div className="text-[13px] text-[#666] space-y-1">

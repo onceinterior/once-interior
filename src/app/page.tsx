@@ -5,10 +5,10 @@ export default function Home() {
         <div className="text-[#333]">
 
             {/* Hero Section */}
-            <section className="relative w-full h-[600px]">
+            <section className="relative w-full h-[800px]">
                 <Image
-                    src="/image/banner.jpg"
-                    alt="Hero"
+                    src="/image/main-banner.jpg"
+                    alt="배너 이미지"
                     fill
                     className="object-cover"
                 />
@@ -40,8 +40,8 @@ export default function Home() {
             {/* Menu Section */}
             <section className="relative h-[500px] w-full">
                 <Image
-                    src="/menu-bg.jpg" // 배경 이미지
-                    alt="소개 배경 이미지 추가 필요"
+                    src="/image/main-middle.jpg"
+                    alt="메인 중앙"
                     fill
                     className="object-cover"
                 />
