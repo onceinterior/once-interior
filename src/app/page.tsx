@@ -31,8 +31,12 @@ export default function Home() {
             </section>
 
             {/* Gallery Section */}
-            <section className="max-w-6xl mx-auto px-4 py-20">
+            <section className="max-w-6xl mx-auto px-4 py-20 space-y-10">
                 <h2 className="text-3xl font-bold text-center mb-10">시공 갤러리</h2>
+
+                {/* 구분선 */}
+                <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {combinedGalleryItems.map((item, index) => (
                         <FadeUpWrapper key={index} delay={index * 50}>
