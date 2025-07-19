@@ -17,8 +17,12 @@ export default function Home() {
                     className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
-                    <h1 className="text-5xl font-bold mb-4">ONCE INTERIOR</h1>
-                    <h3 className="text-3xl">고객님을 위한 단 하나의 인테리어</h3>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        ONCE INTERIOR
+                    </h1>
+                    <h3 className="text-2xl md:text-3xl">
+                        고객님을 위한 단 하나의 인테리어
+                    </h3>
                 </div>
             </section>
 
@@ -29,7 +33,7 @@ export default function Home() {
                     {combinedGalleryItems.map((item, index) => (
                         <FadeUpImageWrapper key={index} delay={index * 50}>
                             <div key={index} className="group">
-                                <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
                                     <Image
                                         src={item.src}
                                         alt={item.title}
