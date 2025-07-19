@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FadeIn from "@/components/fadeIn";
 
 export default function Home() {
     return (
@@ -36,7 +37,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Menu Section */}
+            {/* Description Section */}
             <section className="relative h-[500px] w-full">
                 <Image
                     src="/image/main-middle.jpg"
@@ -46,8 +47,8 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-4 text-white text-center">
                     <div>
-                        <h2 className="text-3xl font-bold mb-4">원스인테리어는</h2>
-                        <p className="text-lg leading-relaxed max-w-xl">
+                        <h2 className="text-4xl font-bold mb-4">원스인테리어는</h2>
+                        <p className="text-xl leading-relaxed max-w-xl">
                             공간의 가치를 높이고<br />
                             고객의 삶을 더 아름답게 만드는<br />
                             프리미엄 인테리어 브랜드입니다.

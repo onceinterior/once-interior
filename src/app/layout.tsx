@@ -2,6 +2,7 @@ import './globals.css'
 import { ReactNode } from 'react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import ConsultHoverButton from "@/components/hover-button";
 
 export const metadata = {
     title: '원스인테리어',
@@ -13,8 +14,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="ko">
             <body className="text-gray-900 bg-white">
                 <Header />
-                    <main>{children}</main>
+                <main>{children}</main>
                 <Footer />
+                <ConsultHoverButton />
             </body>
         </html>
     )
