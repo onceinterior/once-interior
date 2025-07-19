@@ -35,7 +35,7 @@ export default function Commerce() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-16">
                         {commerceGalleryItems.map((item, index) => (
                             <div key={index} className="group">
-                                <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
+                                <div className="relative aspect-square overflow-hidden rounded-lg shadow-md cursor-pointer">
                                     <Image
                                         src={item.src}
                                         alt={item.title}
