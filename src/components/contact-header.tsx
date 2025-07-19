@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 
 export default function KakaoHeader() {
