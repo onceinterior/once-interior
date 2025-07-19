@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-interface FadeUpImageWrapperProps {
+interface FadeUpWrapperProps {
     children: React.ReactNode;
     delay?: number; // ms
 }
-export default function FadeUpImageWrapper({ children, delay = 0 }: FadeUpImageWrapperProps) {
+export default function FadeUpWrapper({ children, delay = 0 }: FadeUpWrapperProps) {
     const ref = useRef<HTMLDivElement | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
