@@ -2,19 +2,18 @@ import Image from "next/image";
 
 export default function Home() {
     return (
-        <div className="text-[#333]">
-
+        <div>
             {/* Hero Section */}
             <section className="relative w-full h-[800px]">
                 <Image
                     src="/image/main-banner.jpg"
-                    alt="배너 이미지"
+                    alt="메인 배너 이미지"
                     fill
                     className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
                     <h1 className="text-5xl font-bold mb-4">ONCE INTERIOR</h1>
-                    <h2 className="text-3xl">고객님을 위한 단 하나의 인테리어</h2>
+                    <h3 className="text-3xl">고객님을 위한 단 하나의 인테리어</h3>
                 </div>
             </section>
 
