@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import KakaoHeader from "@/components/contact-header";
 
 export default function Header() {
     return (
@@ -14,11 +15,17 @@ export default function Header() {
                         className="cursor-pointer"
                     />
                 </Link>
-                <nav className="text-xl space-x-16 font-bold">
-                    <Link href="/about" className="hover:text-[#a68b5b] transition-colors">회사소개</Link>
-                    <Link href="/residence" className="hover:text-[#a68b5b] transition-colors">주거공간</Link>
-                    <Link href="/commerce" className="hover:text-[#a68b5b] transition-colors">상업공간</Link>
-                    <Link href="/contact" className="hover:text-[#a68b5b] transition-colors">문의하기</Link>
+                <nav className="flex items-center text-xl space-x-10 font-bold">
+                    <div className="px-2 py-2">
+                        <Link href="/about" className="hover:text-[#a68b5b] transition-colors">회사소개</Link>
+                    </div>
+                    <div className="px-2 py-2">
+                        <Link href="/residence" className="hover:text-[#a68b5b] transition-colors">주거공간</Link>
+                    </div>
+                    <div className="px-2 py-2">
+                        <Link href="/commerce" className="hover:text-[#a68b5b] transition-colors">상업공간</Link>
+                    </div>
+                    <KakaoHeader />
                 </nav>
             </div>
         </header>
