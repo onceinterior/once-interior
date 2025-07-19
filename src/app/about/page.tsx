@@ -18,15 +18,14 @@ export default function About() {
                             textShadow: "1px 1px 1px rgba(0, 0, 0, 0.3)",
                         }}
                     >
-                        회사 소개
+                        About Once
                     </h1>
                 </div>
             </section>
 
             {/* 소개 본문 */}
             <section className="bg-[#fafafa]">
-                <div className="max-w-2xl mx-auto px-6 py-20 text-lg text-[#444] space-y-10">
-                    {/* 헤드라인 */}
+                <div className="max-w-2xl mx-auto px-6 py-20 space-y-10">
                     <h2 className="text-3xl font-bold text-center text-gray-800">
                         &#34;당신의 공간을 더 특별하게, 더 편안하게&#34;
                     </h2>
@@ -34,8 +33,7 @@ export default function About() {
                     {/* 구분선 */}
                     <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
 
-                    {/* 본문 내용 */}
-                    <div className="space-y-6 leading-relaxed">
+                    <div className="space-y-6 leading-relaxed text-lg text-[#444]">
                         <p>
                             저희는 <strong className="text-[#222]">주거 및 상업 공간 인테리어</strong>를 전문으로 하는 인테리어 업체입니다. <br />
                             디자인부터 시공까지 전 과정을 책임지고, <br />
@@ -48,6 +46,31 @@ export default function About() {
                     </div>
                 </div>
             </section>
+
+            {/* 회사 위치 지도 */}
+
+            <section>
+                <div className="max-w-4xl mx-auto px-6 py-20 space-y-10">
+                    <div className="flex gap-2 items-center">
+                        <div className="w-1 h-6 bg-[#a68b5b]"></div>
+                        <h2 className="text-2xl font-bold">
+                            오시는 길
+                        </h2>
+                    </div>
+
+                    <div>
+                        <p><strong>원스인테리어</strong></p>
+                        <p><strong>주소: </strong> 서울특별시 도봉구 방학로 183 1층</p>
+                        <p><strong>전화: </strong> 010-3633-1874 </p>
+                        <p><strong>이메일: </strong> once_interior@naver.com</p>
+                    </div>
+
+                    <div>
+
+                    </div>
+                </div>
+            </section>
+            
         </div>
     );
 }

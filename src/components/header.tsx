@@ -16,8 +16,8 @@ export default function Header() {
                     />
                 </Link>
                 <nav className="flex items-center text-xl space-x-10 font-bold">
-                    <div className="px-2 py-2">
-                        <Link href="/about" className="hover:text-[#a68b5b] transition-colors">회사소개</Link>
+                    <div className="px-1 py-2">
+                        <Link href="/about" className="hover:text-[#a68b5b] transition-colors">About Once</Link>
                     </div>
                     <div className="px-2 py-2">
                         <Link href="/residence" className="hover:text-[#a68b5b] transition-colors">주거공간</Link>

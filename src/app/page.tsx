@@ -1,5 +1,6 @@
 import Image from "next/image";
-import FadeIn from "@/components/fadeIn";
+import {residenceGalleryItems} from "@/data/residenceData";
+import {commerceGalleryItems} from "@/data/commerceData";
 
 export default function Home() {
     return (
@@ -21,20 +22,35 @@ export default function Home() {
             {/* Gallery Section */}
             <section className="max-w-6xl mx-auto px-4 py-20">
                 <h2 className="text-3xl font-bold text-center mb-10">시공 갤러리</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {/* 실제 이미지로 교체 */}
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className="aspect-square bg-gray-300 rounded-xl overflow-hidden shadow">
-                            <Image
-                                src={`/gallery/img${i + 1}.jpg`}
-                                alt={`시공 이미지 ${i + 1}`}
-                                width={600}
-                                height={600}
-                                className="object-cover w-full h-full"
-                            />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+                    {residenceGalleryItems.map((item, index) => (
+                        <div key={index} className="group">
+                            <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                <Image
+                                    src={item.src}
+                                    alt={item.title}
+                                    fill
+                                    className="object-cover transition duration-300 group-hover:brightness-110"
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {commerceGalleryItems.map((item, index) => (
+                        <div key={index} className="group">
+                            <div className="relative w-full h-64 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                <Image
+                                    src={item.src}
+                                    alt={item.title}
+                                    fill
+                                    className="object-cover transition duration-300 group-hover:brightness-110"
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
             </section>
 
             {/* Description Section */}
