@@ -14,7 +14,7 @@ export default function Residence() {
     return (
         <div>
             {/* 상단 헤더 */}
-            <section className="relative w-full h-[300px]">
+            <section className="relative w-full h-[400px]">
                 <Image
                     src="/image/residence-banner.jpg"
                     alt="주거공간 배너 이미지"

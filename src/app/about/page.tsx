@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function About() {
     return (
         <div>
-            <section className="relative w-full h-[300px]">
+            <section className="relative w-full h-[400px]">
                 <Image
                     src="/image/about-banner.jpg"
                     alt="회사 배너 이미지"
