@@ -13,7 +13,7 @@ export default function Header() {
 
     return (
         <header className="w-full py-4 px-6 shadow-md bg-white sticky top-0 z-50">
-            <div className="max-w-5xl mx-auto flex justify-between items-center">
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
                 <Link href="/">
                     <Image
                         src="/image/watermark.png"
