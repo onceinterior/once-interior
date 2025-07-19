@@ -32,10 +32,10 @@ export default function Commerce() {
                     {/* 구분선 */}
                     <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-16">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
                         {commerceGalleryItems.map((item, index) => (
                             <div key={index} className="group">
-                                <div className="relative aspect-square overflow-hidden rounded-lg shadow-md cursor-pointer">
+                                <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
                                     <Image
                                         src={item.src}
                                         alt={item.title}

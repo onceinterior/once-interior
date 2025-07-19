@@ -13,7 +13,7 @@ export default function Header() {
 
     return (
         <header className="w-full py-4 px-6 shadow-md bg-white sticky top-0 z-50">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <div className="max-w-5xl mx-auto flex justify-between items-center">
                 <Link href="/">
                     <Image
                         src="/image/watermark.png"
@@ -25,10 +25,10 @@ export default function Header() {
                 </Link>
 
                 {/* PC GNB */}
-                <nav className="hidden md:flex items-center text-xl space-x-10 font-bold">
-                    <Link href="/about" className="hover:text-[#a68b5b] transition-colors px-1 py-2">About Once</Link>
-                    <Link href="/residence" className="hover:text-[#a68b5b] transition-colors px-2 py-2">주거공간</Link>
-                    <Link href="/commerce" className="hover:text-[#a68b5b] transition-colors px-2 py-2">상업공간</Link>
+                <nav className="hidden md:flex items-center text-xl space-x-8 font-bold">
+                    <Link href="/about" className="hover:text-[#a68b5b] transition-colors">About Once</Link>
+                    <Link href="/residence" className="hover:text-[#a68b5b] transition-colors">주거공간</Link>
+                    <Link href="/commerce" className="hover:text-[#a68b5b] transition-colors">상업공간</Link>
                     <KakaoHeader />
                 </nav>
 
