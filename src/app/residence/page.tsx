@@ -14,15 +14,23 @@ export default function Residence() {
     return (
         <div>
             {/* 상단 헤더 */}
-            <section className="bg-gray-300 py-24 text-center px-4 text-white">
-                <h1
-                    className="text-4xl font-bold mb-4"
-                    style={{
-                        textShadow: "1px 1px 1px rgba(0, 0, 0, 0.3)",
-                    }}
-                >
-                    주거 공간
-                </h1>
+            <section className="relative w-full h-[300px]">
+                <Image
+                    src="/image/residence-banner.jpg"
+                    alt="주거공간 배너 이미지"
+                    fill
+                    className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
+                    <h1
+                        className="text-4xl font-bold mb-4"
+                        style={{
+                            textShadow: "1px 1px 1px rgba(0, 0, 0, 0.3)",
+                        }}
+                    >
+                        주거 공간
+                    </h1>
+                </div>
             </section>
 
             {/* 갤러리 */}
