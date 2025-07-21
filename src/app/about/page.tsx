@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Map from "@/components/map";
 
 export default function About() {
     return (
@@ -65,8 +66,9 @@ export default function About() {
                         <p><strong>이메일: </strong> once_interior@naver.com</p>
                     </div>
 
+                    {/* 지도 영역 */}
                     <div>
-
+                        <Map />
                     </div>
                 </div>
             </section>
