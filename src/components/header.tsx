@@ -64,6 +64,8 @@ export default function Header() {
                             <Link href="/commerce" onClick={toggleMenu} className="hover:text-[#a68b5b] transition-colors">
                                 상업공간
                             </Link>
+                            <KakaoHeader />
+                            <BlogHeader />
                         </nav>
 
                     </div>
