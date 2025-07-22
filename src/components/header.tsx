@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import KakaoHeader from "@/components/contact-header";
+import {BlogHeader, KakaoHeader} from "@/components/contact-header";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +30,7 @@ export default function Header() {
                     <Link href="/residence" className="hover:text-[#a68b5b] transition-colors">주거공간</Link>
                     <Link href="/commerce" className="hover:text-[#a68b5b] transition-colors">상업공간</Link>
                     <KakaoHeader />
+                    <BlogHeader />
                 </nav>
 
                 {/* Mobile Hamburger Button */}
@@ -63,6 +64,8 @@ export default function Header() {
                             <Link href="/commerce" onClick={toggleMenu} className="hover:text-[#a68b5b] transition-colors">
                                 상업공간
                             </Link>
+                            <KakaoHeader />
+                            <BlogHeader />
                         </nav>
 
                     </div>
