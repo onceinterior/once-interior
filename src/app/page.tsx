@@ -39,7 +39,7 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {combinedGalleryItems.map((item, index) => (
-                        <FadeUpWrapper delay={index * 50}>
+                        <FadeUpWrapper key={index} delay={index * 50}>
                             <div key={index} className="group">
                                 <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
                                     <Image
