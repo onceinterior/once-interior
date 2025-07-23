@@ -5,9 +5,9 @@ export default function About() {
     return (
         <div>
             {/* 상단 헤더 */}
-            <section className="relative w-full h-[300px]">
+            <section className="relative w-full h-[400px]">
                 <Image
-                    src="/image/about-banner.jpg"
+                    src="/image/about-once.png"
                     alt="회사 배너 이미지"
                     fill
                     className="object-cover"
