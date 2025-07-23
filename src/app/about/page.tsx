@@ -36,7 +36,7 @@ export default function About() {
 
                     <div className="space-y-6 leading-relaxed text-lg text-[#444]">
                         <p>
-                            저희는 <strong className="text-[#222]">주거 및 상업 공간 인테리어</strong>를 전문으로 하는 인테리어 업체입니다. <br />
+                            저희는 <strong className="text-[#222]">주거 및 상업 공간 인테리어</strong>를 전문으로 하는 인테리어 파트너입니다. <br />
                             디자인부터 시공까지 전 과정을 책임지고, <br />
                             고객의 라이프스타일과 취향에 맞춘 <strong className="text-[#222]">맞춤형 공간</strong>을 제안합니다.
                         </p>
