@@ -7,7 +7,7 @@ interface FadeUpWrapperProps {
     delay?: number; // ms
 }
 export default function FadeUpWrapper({ children, delay = 0 }: FadeUpWrapperProps) {
-    const ref = useRef<HTMLDivElement | null>(null);
+    const ref = useRef<HTMLDivElement>(null!);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
