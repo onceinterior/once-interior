@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import FadeUpWrapper from "@/components/fade-up-animation";
+import FadeUpWrapper from "@/components/fadeUpWrapper";
 import {residenceItems} from "@/data/residenceData";
 import {commerceItems} from "@/data/commerceData";
 

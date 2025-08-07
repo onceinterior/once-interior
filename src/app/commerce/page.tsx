@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { commerceItems } from "@/data/commerceData";
+import Link from "next/link";
 
 export default function Commerce() {
     return (
@@ -34,17 +35,19 @@ export default function Commerce() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
                         {commerceItems.map((item, index) => (
-                            <div key={index} className="group">
-                                <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
-                                    <Image
-                                        src={item.thumbnailUrl}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover transition duration-300 group-hover:brightness-110"
-                                    />
+                            <Link key={index} href={`/commerce/${item.id}`}>
+                                <div key={index} className="group">
+                                    <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
+                                        <Image
+                                            src={item.thumbnailUrl}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover transition duration-300 group-hover:brightness-110"
+                                        />
+                                    </div>
+                                    <p className="mt-4 text-center text-lg text-gray-900">{item.title}</p>
                                 </div>
-                                <p className="mt-4 text-center text-lg text-gray-900">{item.title}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
