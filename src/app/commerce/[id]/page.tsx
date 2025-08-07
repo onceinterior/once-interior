@@ -14,17 +14,22 @@ export default async function CommerceDetail({ params }: Props) {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-20">
-            <h1 className="text-3xl font-bold mb-6">{item.title}</h1>
-            <div className="relative w-full h-96 mb-6">
-                <Image
-                    src={item.thumbnailUrl}
-                    alt={item.title}
-                    fill
-                    className="object-cover rounded-lg"
-                />
+            <div className="mb-6 flex flex-col items-center space-y-4">
+                <div className="relative">
+                    <Image
+                        src={item.thumbnailUrl}
+                        alt={item.title}
+                        height={300}
+                        width={300}
+                        className="object-cover rounded"
+                    />
+                </div>
+                <h1 className="text-4xl font-bold">{item.title}</h1>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="w-125 h-1 bg-gray-400 rounded-xl mb-6 mx-auto" />
+
+            <div className="flex space-y-5 justify-center pt-5">
                 {item.imageUrls?.map((img, i) => (
                     <div key={i} className="relative w-full h-60">
                         <Image
