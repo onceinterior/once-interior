@@ -1,10 +1,11 @@
 import Image from "next/image";
-import {residenceGalleryItems} from "@/data/residenceData";
-import {commerceGalleryItems} from "@/data/commerceData";
+
 import FadeUpWrapper from "@/components/fade-up-animation";
+import {residenceItems} from "@/data/residenceData";
+import {commerceItems} from "@/data/commerceData";
 
 export default function Home() {
-    const combinedGalleryItems = [...residenceGalleryItems, ...commerceGalleryItems];
+    const combinedGalleryItems = [...residenceItems, ...commerceItems];
 
     return (
         <div>
@@ -43,7 +44,7 @@ export default function Home() {
                             <div key={index} className="group">
                                 <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
                                     <Image
-                                        src={item.src}
+                                        src={item.thumbnailUrl}
                                         alt={item.title}
                                         fill
                                         className="object-cover transition duration-300 group-hover:brightness-110"

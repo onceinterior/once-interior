@@ -9,7 +9,7 @@ export const residenceGalleryItems = [
 export const residenceItems : Post[] = [
     {
         title: "금호2동_28평",
-        thumbnailUrl: "/image/commerce/금호2동_28평.jpg",
+        thumbnailUrl: "/image/residence/금호2동_28평.jpg",
         imagesUrl: [],
         createdAt: 1712339200000
     },
