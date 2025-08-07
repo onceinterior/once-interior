@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {residenceGalleryItems} from "@/data/residenceData";
+import {residenceItems} from "@/data/residenceData";
 
 export default function Residence() {
     return (
@@ -33,11 +33,11 @@ export default function Residence() {
                     <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
-                        {residenceGalleryItems.map((item, index) => (
+                        {residenceItems.map((item, index) => (
                             <div key={index} className="group">
                                 <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md cursor-pointer">
                                     <Image
-                                        src={item.src}
+                                        src={item.thumbnailUrl}
                                         alt={item.title}
                                         fill
                                         className="object-cover transition duration-300 group-hover:brightness-110"
