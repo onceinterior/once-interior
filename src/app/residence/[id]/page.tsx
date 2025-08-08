@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { residenceItems } from "@/data/residenceData";
+import Link from "next/link";
 
 interface Props {
     params: {  id: string };
@@ -14,6 +15,12 @@ export default async function ResidenceDetail({ params }: Props) {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-20 space-y-10">
+            <div>
+                <Link href="/residence" className="bg-[#666666] text-white p-2 rounded-lg">
+                    ⬅ 목록으로
+                </Link>
+            </div>
+            
             <div className="mb-6 flex flex-col items-center space-y-4">
                 <div className="relative">
                     <Image
@@ -27,7 +34,7 @@ export default async function ResidenceDetail({ params }: Props) {
                 <h1 className="text-4xl font-bold">{item.title}</h1>
             </div>
 
-            <div className="w-125 h-1 bg-gray-400 rounded-xl mb-6 mx-auto" />
+            <div className="w-28 h-1 bg-gray-400 rounded-xl mb-6 mx-auto" />
 
             <div className="flex space-y-5 justify-center pt-5">
                 {item.imageUrls?.map((img, i) => (
