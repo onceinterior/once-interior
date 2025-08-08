@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import {commerceItems} from "@/data/commerceData";
+import Link from "next/link";
 
 interface Props {
     params: {  id: string };
@@ -14,6 +15,11 @@ export default async function CommerceDetail({ params }: Props) {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-20">
+            <div>
+                <Link href="/commerce" className="bg-[#666666] text-white p-2 rounded-lg hover:bg-[#777777] hover:cursor-pointer">
+                    ⬅ 목록으로
+                </Link>
+            </div>
             <div className="mb-6 flex flex-col items-center space-y-4">
                 <div className="relative">
                     <Image

@@ -16,7 +16,7 @@ export default async function ResidenceDetail({ params }: Props) {
     return (
         <div className="max-w-4xl mx-auto px-4 py-20 space-y-10">
             <div>
-                <Link href="/residence" className="bg-[#666666] text-white p-2 rounded-lg">
+                <Link href="/residence" className="bg-[#666666] text-white p-2 rounded-lg hover:bg-[#777777] hover:cursor-pointer">
                     ⬅ 목록으로
                 </Link>
             </div>
