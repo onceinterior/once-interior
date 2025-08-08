@@ -2,6 +2,18 @@ import {auth, db, storage} from "@/lib/firebase";
 import {doc, getDoc, updateDoc} from "firebase/firestore";
 import {deleteObject, ref} from "firebase/storage";
 import {onAuthStateChanged, signInWithEmailAndPassword, signOut, User} from "firebase/auth";
+import {Kind, Post} from "@/data/type";
+
+export async function getPosts(kind: Kind): Promise<Post[]> {
+    const ref = doc(db, "kind", kind);
+    const snap = await getDoc(ref);
+    return snap.exists() ? snap.data().items ?? [] : [];
+}
+
+export async function savePosts(kind: Kind, items: Post[]): Promise<void> {
+    const ref = doc(db, "kind", kind);
+    await updateDoc(ref, { items });
+}
 
 export async function deleteImageFromStorage(imageUrl: string): Promise<void> {
     const url = new URL(imageUrl);

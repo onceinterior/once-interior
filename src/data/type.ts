@@ -6,3 +6,5 @@ export interface Post {
     createdAt: number;
     updatedAt?: number;
 }
+
+export type Kind = "residence" | "commerce";
