@@ -28,7 +28,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
     const [uploadingThumb, setUploadingThumb] = useState(false);
     const [uploadingMain, setUploadingMain] = useState(false);
 
-    // 썸네일 업로드 (단일)
+    // 썸네일 업로드
     async function handleUploadThumbnail(file: File | null) {
         if (!file) return;
         setUploadingThumb(true);
@@ -56,6 +56,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
         }
     }
 
+    // 본문 이미지 업로드
     async function handleUploadMain(files: FileList | null) {
         if (!files || files.length === 0) return;
         setUploadingMain(true);
@@ -75,6 +76,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
         }
     }
 
+    // 본문 이미지 삭제
     async function handleRemoveMain(url: string) {
         try {
             await deleteImageFromStorage(url);
@@ -97,6 +99,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
         return true;
     }
 
+    // 저장 및 돌아가기
     async function handleSubmit() {
         if (!validate()) return;
 
@@ -149,7 +152,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
                 </div>
             </header>
 
-            {/* 1) 제목 div */}
+            {/* 1) 제목 */}
             <section className="space-y-2">
                 <label className="block text-md font-medium">제목</label>
                 <input
@@ -161,7 +164,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
                 />
             </section>
 
-            {/* 2) 썸네일 div (미리보기 포함) */}
+            {/* 2) 썸네일  */}
             <section className="space-y-3">
                 <label className="block text-md font-medium">썸네일</label>
                 <div className="flex items-center gap-3">
@@ -191,21 +194,19 @@ export default function PostForm({ kind, title }: PostFormProps) {
                     )}
                 </div>
 
-                {/* 미리보기 자리 */}
-                <div>
-                    {thumbnailUrl ? (
-                        <div className="w-48 h-32 border overflow-hidden">
-                            <Image src={thumbnailUrl} alt={thumbnailUrl} fill className="object-cover" />
-                        </div>
-                    ) : (
-                        <div className="text-md text-gray-400">
-                            썸네일을 등록해주세요.
-                        </div>
-                    )}
-                </div>
+                {/* 썸네일 미리보기 */}
+                {thumbnailUrl ? (
+                    <div className="w-48 h-32 border overflow-hidden">
+                        <Image src={thumbnailUrl} alt={thumbnailUrl} fill className="object-cover" />
+                    </div>
+                ) : (
+                    <div className="text-md text-gray-400">
+                        썸네일을 등록해주세요.
+                    </div>
+                )}
             </section>
 
-            {/* 3) 상세 이미지 div */}
+            {/* 3) 상세 이미지 */}
             <section className="space-y-3">
                 <label className="block text-md font-medium">상세 이미지</label>
                 <input
@@ -224,6 +225,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
                 </label>
                 {uploadingMain && <p className="text-gray-500 text-sm">업로드 중...</p>}
 
+                {/* 본문 이미지 미리보기 */}
                 {mainImageUrls.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {mainImageUrls.map((url) => (
