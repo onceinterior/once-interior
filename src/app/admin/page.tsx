@@ -6,6 +6,7 @@ import Image from 'next/image';
 import {deleteImageFromStorage, getPosts, savePosts} from '@/lib/api';
 import {CheckIcon, TrashIcon} from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function AdminPage() {
     const [mode, setMode] = useState<Kind>('commerce');
@@ -39,28 +40,39 @@ export default function AdminPage() {
 
     return (
         <div className="max-w-4xl mx-auto p-6 space-y-6">
-            {/* 상단 카테고리 선택 */}
-            <div className="flex gap-4">
-                {(["commerce", "residence"] as Kind[]).map((kind) => {
-                    const isSelected = mode === kind;
-                    return (
-                        <button
-                            key={kind}
-                            onClick={() => setMode(kind)}
-                            className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all duration-200 hover:cursor-pointer
+            <div className="flex justify-between items-center">
+                {/* 상단 카테고리 선택 */}
+                <div className="flex space-x-4">
+                    {(["commerce", "residence"] as Kind[]).map((kind) => {
+                        const isSelected = mode === kind;
+                        return (
+                            <button
+                                key={kind}
+                                onClick={() => setMode(kind)}
+                                className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all duration-200 hover:cursor-pointer
                             ${isSelected
-                                        ? "bg-blue-500 text-white shadow-lg scale-105 font-bold"
-                                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                                    }`}
-                        >
-                            {isSelected && <CheckIcon className="w-5 h-5 text-white" />}
-                            <span>
+                                    ? "bg-gray-700 text-white shadow-lg scale-105 font-bold"
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                                }`}
+                            >
+                                {isSelected && <CheckIcon className="w-5 h-5 text-white" />}
+                                <span>
                                 {kind === "commerce" ? "상업공간" : "주거공간"}
                             </span>
-                        </button>
-                    );
-                })}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {/* 새 링크 추가 */}
+                <Link
+                    href={`/admin/new/${mode}`}
+                    className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-400 transition"
+                >
+                    {mode === 'residence' ? '주거공간 추가' : '상업공간 추가'}
+                </Link>
             </div>
+
 
             {/* 리스트 */}
             <div className="space-y-4">
