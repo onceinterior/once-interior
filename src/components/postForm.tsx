@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -25,51 +26,24 @@ export default function PostForm({
                                  }: PostFormProps) {
     const router = useRouter();
 
-    // 다음 게시글 ID 사전 계산 (스토리지 경로용)
-    const [postId, setPostId] = useState<number | null>(null);
-
+    // 게시글 id
+    const [postId] = useState<string>(() => uuidv4());
     // 입력 상태
     const [postTitle, setPostTitle] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [images, setImages] = useState<Uploaded[]>([]);
-
     // 로딩 상태
     const [uploadingThumb, setUploadingThumb] = useState(false);
     const [uploadingMain, setUploadingMain] = useState(false);
-    const [saving, setSaving] = useState(false);
-
-    // postId 계산
-    useEffect(() => {
-        (async () => {
-            try {
-                const current = await getPosts(kind);
-                const next =
-                    current.length > 0 ? Math.max(...current.map((p) => p.id)) + 1 : 1;
-                setPostId(next);
-            } catch (e) {
-                console.error(e);
-                toast.error('다음 글 번호를 불러오지 못했습니다.');
-            }
-        })();
-    }, [kind]);
-
-    const basePath = useMemo(
-        () => (postId ? `${kind}/${postId}` : null),
-        [kind, postId]
-    );
 
     // 썸네일 업로드 (단일)
     async function handleUploadThumbnail(file: File | null) {
         if (!file) return;
-        if (!basePath) {
-            toast.error('아직 글 번호를 준비 중입니다. 잠시 후 다시 시도하세요.');
-            return;
-        }
         setUploadingThumb(true);
         try {
             const storageRef = ref(
                 storage,
-                `${basePath}/thumbnail/${file.name}`
+                `${kind}/${postId}/thumbnail/${file.name}`
             );
             await uploadBytes(storageRef, file);
             const url = await getDownloadURL(storageRef);
@@ -98,17 +72,13 @@ export default function PostForm({
     // 그 외 이미지 업로드 (다중)
     async function handleUploadMain(files: FileList | null) {
         if (!files || files.length === 0) return;
-        if (!basePath) {
-            toast.error('아직 글 번호를 준비 중입니다. 잠시 후 다시 시도하세요.');
-            return;
-        }
         setUploadingMain(true);
         try {
             const uploaded: Uploaded[] = [];
             for (const file of Array.from(files)) {
                 const storageRef = ref(
                     storage,
-                    `${basePath}/main/${file.name}`
+                    `${kind}/${postId}/main/${file.name}`
                 );
                 await uploadBytes(storageRef, file);
                 const url = await getDownloadURL(storageRef);
@@ -168,7 +138,7 @@ export default function PostForm({
         router.push(backHref);
     }
 
-    const disabled = uploadingThumb || uploadingMain || saving;
+    const disabled = uploadingThumb || uploadingMain;
 
     return (
         <div className="max-w-3xl mx-auto p-6 space-y-10">
@@ -195,7 +165,7 @@ export default function PostForm({
                         disabled={disabled}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-400 hover:cursor-pointer disabled:opacity-50"
                     >
-                        {saving ? '저장 중...' : '저장'}
+                        저장
                     </button>
                 </div>
             </header>

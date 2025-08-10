@@ -8,7 +8,7 @@ interface Props {
 
 export default async function ResidenceDetail({ params }: Props) {
     const { id } = await params;
-    const item = residenceItems.find((item) => item.id.toString() === id);
+    const item = residenceItems.find((item) => item.id === id);
 
     if (!item) return notFound();
 

@@ -8,7 +8,7 @@ interface Props {
 
 export default async function CommerceDetail({ params }: Props) {
     const { id } = await params;
-    const item = commerceItems.find((item) => item.id.toString() === id);
+    const item = commerceItems.find((item) => item.id === id);
 
     if (!item) return notFound();
 
