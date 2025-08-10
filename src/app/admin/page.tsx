@@ -1,41 +1,56 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from 'react';
-import type {Post, Kind} from '@/data/type';
-import Image from 'next/image';
-import {deleteImageFromStorage, getPosts, savePosts} from '@/lib/api';
-import {CheckIcon, TrashIcon} from "@heroicons/react/24/solid";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import type { Post, Kind } from "@/data/type";
+import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { CheckIcon, TrashIcon } from "@heroicons/react/24/solid";
+
+import { getPosts, deletePost, deleteImageFromStorage } from "@/lib/api";
 
 export default function AdminPage() {
-    const [mode, setMode] = useState<Kind>('commerce');
+    const [mode, setMode] = useState<Kind>("commerce");
     const [items, setItems] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
+    // 목록 로드 (최신순)
     useEffect(() => {
-        (async  () => {
-            const posts = await getPosts(mode);
-            setItems(posts);
+        (async () => {
+            setLoading(true);
+            try {
+                const posts = await getPosts(mode); // orderBy("createdAt","desc")
+                setItems(posts);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
         })();
     }, [mode]);
 
-    async function handleSave(updated: Post[]) {
-        await savePosts(mode, updated);
-        setItems(updated);
-    }
+    // 삭제
+    async function handleDelete(post: Post) {
+        if (!confirm("정말 삭제하시겠습니까?")) return;
 
-    async function handleDelete(index: number) {
-        const itemToDelete = items[index];
+        setDeletingId(post.id);
+        try {
+            // 1) Storage 이미지들 먼저 삭제
+            const allUrls = [post.thumbnailUrl, ...(post.imageUrls || [])];
+            await Promise.all(allUrls.map((url) => deleteImageFromStorage(url)));
 
-        await Promise.all(
-            [itemToDelete.thumbnailUrl, ...itemToDelete.imageUrls].map((url) =>
-                deleteImageFromStorage(url)
-            )
-        );
+            // 2) Firestore 문서 삭제
+            await deletePost(mode, post.id);
 
-        const updated = items.filter((_, i) => i !== index);
-        await handleSave(updated);
-        toast.success("삭제되었습니다.");
+            // 3) UI 반영
+            setItems((prev) => prev.filter((p) => p.id !== post.id));
+            toast.success("삭제되었습니다.");
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setDeletingId(null);
+        }
     }
 
     return (
@@ -49,16 +64,15 @@ export default function AdminPage() {
                             <button
                                 key={kind}
                                 onClick={() => setMode(kind)}
+                                disabled={loading}
                                 className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all duration-200 hover:cursor-pointer
-                            ${isSelected
+                                ${isSelected
                                     ? "bg-gray-700 text-white shadow-lg scale-105 font-bold"
                                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                                 }`}
                             >
                                 {isSelected && <CheckIcon className="w-5 h-5 text-white" />}
-                                <span>
-                                {kind === "commerce" ? "상업공간" : "주거공간"}
-                            </span>
+                                <span>{kind === "commerce" ? "상업공간" : "주거공간"}</span>
                             </button>
                         );
                     })}
@@ -69,14 +83,18 @@ export default function AdminPage() {
                     href={`/admin/new/${mode}`}
                     className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-400 transition"
                 >
-                    {mode === 'residence' ? '주거공간 추가' : '상업공간 추가'}
+                    {mode === "residence" ? "주거공간 추가" : "상업공간 추가"}
                 </Link>
             </div>
 
-
             {/* 리스트 */}
             <div className="space-y-4">
-                {items.map((item, index) => (
+                {loading && <div className="text-gray-500">불러오는 중...</div>}
+                {!loading && items.length === 0 && (
+                    <div className="text-gray-500">등록된 공간이 없습니다.</div>
+                )}
+
+                {items.map((item) => (
                     <div
                         key={item.id}
                         className="flex items-center gap-4 p-4 border rounded-lg"
@@ -96,10 +114,7 @@ export default function AdminPage() {
                             <p className="font-bold">{item.title}</p>
                             <div className="flex gap-2 mt-2 overflow-x-auto">
                                 {item.imageUrls.slice(0, 3).map((url, i) => (
-                                    <div
-                                        key={i}
-                                        className="relative w-16 h-16 flex-shrink-0"
-                                    >
+                                    <div key={i} className="relative w-16 h-16 flex-shrink-0">
                                         <Image
                                             src={url}
                                             alt={`이미지 ${i + 1}`}
@@ -118,8 +133,10 @@ export default function AdminPage() {
 
                         {/* 삭제 버튼 */}
                         <button
-                            onClick={() => handleDelete(index)}
-                            className="p-2 rounded-full hover:bg-red-100"
+                            onClick={() => handleDelete(item)}
+                            disabled={deletingId === item.id}
+                            className="p-2 rounded-full hover:bg-red-100 disabled:opacity-50"
+                            title="삭제"
                         >
                             <TrashIcon className="w-5 h-5 text-red-500" />
                         </button>

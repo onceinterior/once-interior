@@ -187,8 +187,8 @@ export default function PostForm({ kind, title }: PostFormProps) {
 
                 {/* 썸네일 미리보기 */}
                 {thumbnailUrl ? (
-                    <div className="w-48 h-32 border overflow-hidden">
-                        <Image src={thumbnailUrl} alt={thumbnailUrl} fill className="object-cover" />
+                    <div className="overflow-hidden">
+                        <Image src={thumbnailUrl} alt={thumbnailUrl} width={400} height={300} className="object-cover" />
                     </div>
                 ) : (
                     <div className="text-md text-gray-400">
@@ -218,20 +218,20 @@ export default function PostForm({ kind, title }: PostFormProps) {
 
                 {/* 본문 이미지 미리보기 */}
                 {mainImageUrls.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div className="w-100">
                         {mainImageUrls.map((url) => (
                             <div key={url} className="relative rounded-lg border overflow-hidden">
                                 <Image
                                     src={url}
                                     alt={url}
-                                    width={300}
+                                    width={400}
                                     height={300}
-                                    className="w-full h-40 object-cover"
+                                    className="object-cover"
                                 />
-                                <div className="absolute inset-x-0 bottom-0 p-2 bg-black/40 text-white text-xs flex items-center justify-end">
+                                <div className="absolute inset-x-0 top-0 p-2 text-white text-xs flex items-center justify-end">
                                     <button
                                         onClick={() => handleRemoveMain(url)}
-                                        className="px-2 py-1 rounded bg-white/20 hover:bg-white/30"
+                                        className="px-2 py-1 rounded bg-red-500/20 hover:bg-red-600/30 hover:cursor-pointer"
                                     >
                                         삭제
                                     </button>
