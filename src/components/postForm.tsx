@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -11,28 +11,20 @@ import type { Kind, Post } from '@/data/type';
 import { storage } from '@/lib/firebase';
 import { getPosts, savePosts, deleteImageFromStorage } from '@/lib/api';
 
-type Uploaded = { url: string; name: string };
-
 interface PostFormProps {
     kind: Kind;
-    backHref: string;
     title: string;
 }
 
-export default function PostForm({
-                                     kind,
-                                     backHref,
-                                     title
-                                 }: PostFormProps) {
+export default function PostForm({ kind, title }: PostFormProps) {
     const router = useRouter();
 
-    // 게시글 id
     const [postId] = useState<string>(() => uuidv4());
-    // 입력 상태
+
     const [postTitle, setPostTitle] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState('');
-    const [images, setImages] = useState<Uploaded[]>([]);
-    // 로딩 상태
+    const [mainImageUrls, setMainImageUrls] = useState<string[]>([]);
+
     const [uploadingThumb, setUploadingThumb] = useState(false);
     const [uploadingMain, setUploadingMain] = useState(false);
 
@@ -41,10 +33,7 @@ export default function PostForm({
         if (!file) return;
         setUploadingThumb(true);
         try {
-            const storageRef = ref(
-                storage,
-                `${kind}/${postId}/thumbnail/${file.name}`
-            );
+            const storageRef = ref(storage, `${kind}/${postId}/thumbnail/${file.name}`);
             await uploadBytes(storageRef, file);
             const url = await getDownloadURL(storageRef);
             setThumbnailUrl(url);
@@ -62,47 +51,36 @@ export default function PostForm({
         try {
             await deleteImageFromStorage(thumbnailUrl);
             setThumbnailUrl('');
-            toast.success('썸네일 삭제 완료');
         } catch (e) {
             console.error(e);
-            toast.error('썸네일 삭제 실패');
         }
     }
 
-    // 그 외 이미지 업로드 (다중)
     async function handleUploadMain(files: FileList | null) {
         if (!files || files.length === 0) return;
         setUploadingMain(true);
         try {
-            const uploaded: Uploaded[] = [];
+            const uploadedUrls: string[] = [];
             for (const file of Array.from(files)) {
-                const storageRef = ref(
-                    storage,
-                    `${kind}/${postId}/main/${file.name}`
-                );
+                const storageRef = ref(storage, `${kind}/${postId}/main/${file.name}`);
                 await uploadBytes(storageRef, file);
                 const url = await getDownloadURL(storageRef);
-                uploaded.push({ url, name: file.name });
+                uploadedUrls.push(url);
             }
-            setImages((prev) => [...prev, ...uploaded]);
-            toast.success('이미지 업로드 완료');
+            setMainImageUrls((prev) => [...prev, ...uploadedUrls]);
         } catch (e) {
             console.error(e);
-            toast.error('이미지 업로드 실패');
         } finally {
             setUploadingMain(false);
         }
     }
 
-    // 메인 이미지 개별 삭제
     async function handleRemoveMain(url: string) {
         try {
             await deleteImageFromStorage(url);
-            setImages((prev) => prev.filter((i) => i.url !== url));
-            toast.success('이미지 삭제 완료');
+            setMainImageUrls((prev) => prev.filter((u) => u !== url));
         } catch (e) {
             console.error(e);
-            toast.error('이미지 삭제 실패');
         }
     }
 
@@ -123,22 +101,23 @@ export default function PostForm({
         if (!validate()) return;
 
         const now = Date.now();
+
         const newPost: Post = {
-            id: postId!, // 확정된 ID
+            id: postId,
             title: postTitle.trim(),
             thumbnailUrl,
-            imageUrls: images.map((i) => i.url),
+            imageUrls: mainImageUrls,
             createdAt: now,
             updatedAt: now,
         };
 
         const current = await getPosts(kind);
-        const updatedPost = [...current, newPost];
-        await savePosts(kind, updatedPost);
-        router.push(backHref);
+        const updated = [...current, newPost];
+        await savePosts(kind, updated);
+        router.replace('/admin');
     }
 
-    const disabled = uploadingThumb || uploadingMain;
+    const routerButtonDisabled = uploadingThumb || uploadingMain;
 
     return (
         <div className="max-w-3xl mx-auto p-6 space-y-10">
@@ -149,20 +128,20 @@ export default function PostForm({
                 <h1 className="text-2xl font-bold">
                     {title}{' '}
                     <span className="text-sm text-gray-500">
-            ({kind}{postId ? ` #${postId}` : ''})
+            ({kind} #{postId.slice(0, 8)})
           </span>
                 </h1>
                 <div className="flex gap-3">
                     <button
-                        onClick={() => router.push(backHref)}
-                        disabled={disabled}
+                        onClick={() => router.replace('/admin')}
+                        disabled={routerButtonDisabled}
                         className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-500 hover:cursor-pointer disabled:opacity-50"
                     >
                         목록으로
                     </button>
                     <button
                         onClick={handleSubmit}
-                        disabled={disabled}
+                        disabled={routerButtonDisabled}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-400 hover:cursor-pointer disabled:opacity-50"
                     >
                         저장
@@ -176,7 +155,7 @@ export default function PostForm({
                 <input
                     type="text"
                     className="border p-2 w-full rounded"
-                    placeholder="게시글 제목"
+                    placeholder="제목"
                     value={postTitle}
                     onChange={(e) => setPostTitle(e.target.value)}
                 />
@@ -212,23 +191,23 @@ export default function PostForm({
                     )}
                 </div>
 
-                {/* 미리보기 자리 항상 유지 */}
-                <div className="min-h-32">
+                {/* 미리보기 자리 */}
+                <div>
                     {thumbnailUrl ? (
-                        <div className="relative w-48 h-32 border rounded overflow-hidden">
-                            <Image src={thumbnailUrl} alt="thumbnail" fill className="object-cover" />
+                        <div className="w-48 h-32 border overflow-hidden">
+                            <Image src={thumbnailUrl} alt={thumbnailUrl} fill className="object-cover" />
                         </div>
                     ) : (
-                        <div className="w-48 h-32 border rounded flex items-center justify-center text-xs text-gray-400">
-                            썸네일 미리보기
+                        <div className="text-md text-gray-400">
+                            썸네일을 등록해주세요.
                         </div>
                     )}
                 </div>
             </section>
 
-            {/* 3) 그 외 이미지 div */}
+            {/* 3) 상세 이미지 div */}
             <section className="space-y-3">
-                <label className="block text-md font-medium">그 외 이미지</label>
+                <label className="block text-md font-medium">상세 이미지</label>
                 <input
                     id="mainUpload"
                     type="file"
@@ -243,24 +222,22 @@ export default function PostForm({
                 >
                     이미지 선택
                 </label>
-                {uploadingMain && (
-                    <p className="text-gray-500 text-sm">업로드 중...</p>
-                )}
+                {uploadingMain && <p className="text-gray-500 text-sm">업로드 중...</p>}
 
-                {images.length > 0 ? (
+                {mainImageUrls.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        {images.map((img) => (
-                            <div key={img.url} className="relative rounded-lg border overflow-hidden">
+                        {mainImageUrls.map((url) => (
+                            <div key={url} className="relative rounded-lg border overflow-hidden">
                                 <Image
-                                    src={img.url}
-                                    alt={img.name}
+                                    src={url}
+                                    alt={url}
                                     width={300}
                                     height={300}
                                     className="w-full h-40 object-cover"
                                 />
                                 <div className="absolute inset-x-0 bottom-0 p-2 bg-black/40 text-white text-xs flex items-center justify-end">
                                     <button
-                                        onClick={() => handleRemoveMain(img.url)}
+                                        onClick={() => handleRemoveMain(url)}
                                         className="px-2 py-1 rounded bg-white/20 hover:bg-white/30"
                                     >
                                         삭제
@@ -270,8 +247,8 @@ export default function PostForm({
                         ))}
                     </div>
                 ) : (
-                    <div className="border rounded p-6 text-sm text-gray-500">
-                        업로드된 이미지가 없습니다.
+                    <div className="text-md text-gray-400">
+                        상세 이미지가 없습니다.
                     </div>
                 )}
             </section>
