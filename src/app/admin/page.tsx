@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import type {Post, Kind} from '@/data/type';
 import Image from 'next/image';
 import {deleteImageFromStorage, getPosts, savePosts} from '@/lib/api';
-import {TrashIcon} from "@heroicons/react/24/solid";
+import {CheckIcon, TrashIcon} from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
 export default function AdminPage() {
@@ -41,19 +41,25 @@ export default function AdminPage() {
         <div className="max-w-4xl mx-auto p-6 space-y-6">
             {/* 상단 카테고리 선택 */}
             <div className="flex gap-4">
-                {(["commerce", "residence"] as Kind[]).map((kind) => (
-                    <button
-                        key={kind}
-                        onClick={() => setMode(kind)}
-                        className={`px-4 py-2 rounded ${
-                            mode === kind
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200"
-                        }`}
-                    >
-                        {kind === "commerce" ? "상업공간" : "주거공간"}
-                    </button>
-                ))}
+                {(["commerce", "residence"] as Kind[]).map((kind) => {
+                    const isSelected = mode === kind;
+                    return (
+                        <button
+                            key={kind}
+                            onClick={() => setMode(kind)}
+                            className={`flex items-center gap-2 px-5 py-2 rounded-lg transition-all duration-200 hover:cursor-pointer
+                            ${isSelected
+                                        ? "bg-blue-500 text-white shadow-lg scale-105 font-bold"
+                                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                                    }`}
+                        >
+                            {isSelected && <CheckIcon className="w-5 h-5 text-white" />}
+                            <span>
+                                {kind === "commerce" ? "상업공간" : "주거공간"}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
 
             {/* 리스트 */}
