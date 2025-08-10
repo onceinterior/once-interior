@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import {commerceItems} from "@/data/commerceData";
 import DetailPage from "@/components/detailPage";
+import {getPost} from "@/lib/api";
+import {Kind} from "@/data/type";
 
 interface Props {
     params: {  id: string };
@@ -8,7 +9,7 @@ interface Props {
 
 export default async function CommerceDetail({ params }: Props) {
     const { id } = await params;
-    const item = commerceItems.find((item) => item.id === id);
+    const item = await getPost("commerce" as Kind, id);
 
     if (!item) return notFound();
 

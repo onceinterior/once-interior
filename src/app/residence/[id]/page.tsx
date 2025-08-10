@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { residenceItems } from "@/data/residenceData";
 import DetailPage from "@/components/detailPage";
+import {getPost} from "@/lib/api";
+import {Kind} from "@/data/type";
 
 interface Props {
     params: {  id: string };
@@ -8,7 +9,7 @@ interface Props {
 
 export default async function ResidenceDetail({ params }: Props) {
     const { id } = await params;
-    const item = residenceItems.find((item) => item.id === id);
+    const item = await getPost("residence" as Kind, id);
 
     if (!item) return notFound();
 
