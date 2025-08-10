@@ -2,7 +2,7 @@ import {Post} from "@/data/type";
 
 export const residenceItems : Post[] = [
     {
-        id: 1,
+        id: "tesmx",
         title: "금호2동_28평",
         thumbnailUrl: "/image/residence/금호2동_28평.jpg",
         imageUrls: [

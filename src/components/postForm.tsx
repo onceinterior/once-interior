@@ -5,11 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
 import type { Kind, Post } from '@/data/type';
-import { storage } from '@/lib/firebase';
-import { getPosts, savePosts, deleteImageFromStorage } from '@/lib/api';
+import {deleteImageFromStorage, createPost, insertImageToStorage} from '@/lib/api';
 
 interface PostFormProps {
     kind: Kind;
@@ -33,9 +30,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
         if (!file) return;
         setUploadingThumb(true);
         try {
-            const storageRef = ref(storage, `${kind}/${postId}/thumbnail/${file.name}`);
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
+            const url = await insertImageToStorage(kind, postId, "thumbnail", file);
             setThumbnailUrl(url);
         } catch (e) {
             console.error(e);
@@ -63,9 +58,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
         try {
             const uploadedUrls: string[] = [];
             for (const file of Array.from(files)) {
-                const storageRef = ref(storage, `${kind}/${postId}/main/${file.name}`);
-                await uploadBytes(storageRef, file);
-                const url = await getDownloadURL(storageRef);
+                const url = await insertImageToStorage(kind, postId, "main", file);
                 uploadedUrls.push(url);
             }
             setMainImageUrls((prev) => [...prev, ...uploadedUrls]);
@@ -114,9 +107,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
             updatedAt: now,
         };
 
-        const current = await getPosts(kind);
-        const updated = [...current, newPost];
-        await savePosts(kind, updated);
+        await createPost(kind, newPost);
         router.replace('/admin');
     }
 
