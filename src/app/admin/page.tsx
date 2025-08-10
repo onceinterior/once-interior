@@ -138,7 +138,7 @@ export default function AdminPage() {
                             className="p-2 rounded-full hover:bg-red-100 disabled:opacity-50"
                             title="삭제"
                         >
-                            <TrashIcon className="w-5 h-5 text-red-500" />
+                            <TrashIcon className="w-6 h-6 text-red-500 hover:cursor-pointer" />
                         </button>
                     </div>
                 ))}
