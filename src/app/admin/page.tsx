@@ -5,7 +5,7 @@ import type { Post, Kind } from "@/data/type";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { CheckIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 import { getPosts, deletePost, deleteImageFromStorage } from "@/lib/api";
 
@@ -130,6 +130,14 @@ export default function AdminPage() {
                                 )}
                             </div>
                         </div>
+
+                        <Link
+                            href={`/admin/edit/${mode}/${item.id}`}
+                            className="p-2 rounded-full hover:bg-blue-100"
+                            title="수정"
+                        >
+                            <PencilSquareIcon className="w-6 h-6 text-blue-500 hover:cursor-pointer" />
+                        </Link>
 
                         {/* 삭제 버튼 */}
                         <button
