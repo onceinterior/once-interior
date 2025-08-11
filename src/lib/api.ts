@@ -1,7 +1,7 @@
 import {auth, db, storage} from "@/lib/firebase";
 import {
     collection, doc, getDoc, setDoc, updateDoc, deleteDoc,
-    orderBy, query, getDocs
+    orderBy, query, getDocs, limit
 } from "firebase/firestore";
 import {deleteObject, getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {onAuthStateChanged, signInWithEmailAndPassword, signOut, User} from "firebase/auth";
@@ -11,6 +11,12 @@ const postsCol = (kind: Kind) => collection(db, "kinds", kind, "posts");
 
 export async function getPosts(kind: Kind): Promise<Post[]> {
     const q = query(postsCol(kind), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => d.data() as Post);
+}
+
+export async function getRecentPosts(kind: Kind, count: number): Promise<Post[]> {
+    const q = query(postsCol(kind), orderBy("createdAt", "desc"), limit(count));
     const snap = await getDocs(q);
     return snap.docs.map(d => d.data() as Post);
 }
