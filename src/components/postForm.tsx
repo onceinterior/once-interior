@@ -10,10 +10,9 @@ import {deleteImageFromStorage, createPost, insertImageToStorage} from '@/lib/ap
 
 interface PostFormProps {
     kind: Kind;
-    title: string;
 }
 
-export default function PostForm({ kind, title }: PostFormProps) {
+export default function PostForm({ kind }: PostFormProps) {
     const router = useRouter();
 
     const [postId] = useState<string>(() => uuidv4());
@@ -120,7 +119,7 @@ export default function PostForm({ kind, title }: PostFormProps) {
             {/* 상단 액션 */}
             <header className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold">
-                    {title}{' '}
+                    {kind == 'residence' ? "주거공간 추가" : "상업공간 추가"}
                     <span className="text-sm text-gray-500">
             ({kind} #{postId.slice(0, 8)})
           </span>
