@@ -306,7 +306,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 {uploadingMain && <p className="text-gray-500 text-sm">업로드 중...</p>}
 
                 {mainImageUrls.length > 0 ? (
-                    <div className="w-100">
+                    <div className="w-100 space-y-3">
                         {mainImageUrls.map((url) => (
                             <div key={url} className="relative rounded-lg border overflow-hidden">
                                 <Image src={url} alt={url} width={400} height={300} className="object-cover" />
