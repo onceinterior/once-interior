@@ -222,16 +222,16 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     <button
                         onClick={() => router.replace('/admin')}
                         disabled={disabled}
-                        className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-500 disabled:opacity-50"
+                        className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-500 disabled:opacity-50 hover:cursor-pointer"
                     >
                         목록으로
                     </button>
                     <button
                         onClick={handleSubmit}
                         disabled={disabled}
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-400 disabled:opacity-50"
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-400 disabled:opacity-50 hover:cursor-pointer"
                     >
-                        {isEdit ? '수정 저장' : '저장'}
+                        저장
                     </button>
                 </div>
             </header>
@@ -261,7 +261,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     />
                     <label
                         htmlFor="thumbUpload"
-                        className="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-400 transition"
+                        className="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-400 transition hover:cursor-pointer"
                     >
                         이미지 선택
                     </label>
@@ -269,7 +269,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     {thumbnailUrl && (
                         <button
                             onClick={handleRemoveThumbnail}
-                            className="px-3 py-2 rounded bg-gray-700 text-white hover:bg-gray-500"
+                            className="px-3 py-2 rounded bg-gray-700 text-white hover:bg-gray-500 hover:cursor-pointer"
                         >
                             썸네일 삭제
                         </button>
@@ -299,7 +299,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 />
                 <label
                     htmlFor="mainUpload"
-                    className="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-400 transition"
+                    className="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-400 transition hover:cursor-pointer"
                 >
                     이미지 선택
                 </label>
@@ -313,7 +313,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                                 <div className="absolute inset-x-0 top-0 p-2 text-white text-xs flex items-center justify-end">
                                     <button
                                         onClick={() => handleRemoveMain(url)}
-                                        className="px-2 py-1 rounded bg-red-500/20 hover:bg-red-600/30"
+                                        className="px-2 py-1 rounded bg-red-500/20 hover:bg-red-600/30 hover:cursor-pointer"
                                     >
                                         삭제
                                     </button>

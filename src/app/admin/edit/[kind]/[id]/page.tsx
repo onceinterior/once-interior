@@ -1,3 +1,5 @@
+"use client";
+
 import PostForm from "@/components/postForm";
 import { useParams } from "next/navigation";
 import type { Kind } from "@/data/type";
