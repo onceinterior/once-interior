@@ -31,7 +31,11 @@ export async function createPost(kind: Kind, post: Post) {
 }
 
 export async function updatePost(kind: Kind, postId: string, patch: Partial<Post>) {
-    await updateDoc(doc(postsCol(kind), postId), { ...patch, updatedAt: Date.now() });
+    const { id: _ignoredId, createdAt: _ignoredCreatedAt, ...rest } = patch ?? {};
+    await updateDoc(doc(postsCol(kind), postId), {
+        ...rest,
+        updatedAt: Date.now(),
+    });
 }
 
 export async function deletePost(kind: Kind, postId: string) {
