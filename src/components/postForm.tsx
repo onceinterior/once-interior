@@ -219,6 +219,14 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                         : (kind === 'residence' ? '주거공간 추가' : '상업공간 추가')}
                     <span className="text-sm text-gray-500"> ({kind} #{postId.slice(0, 8)})</span>
                 </h1>
+
+                {isEdit && original && (
+                    <div className="text-sm text-gray-500 mt-1">
+                        생성일: {new Date(original.createdAt).toLocaleString()}<br />
+                        수정일: {new Date(original.updatedAt).toLocaleString()}
+                    </div>
+                )}
+
                 <div className="flex gap-3">
                     <button
                         onClick={() => router.replace('/admin')}

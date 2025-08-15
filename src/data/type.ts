@@ -4,7 +4,7 @@ export interface Post {
     thumbnailUrl: string;
     imageUrls: string[];
     createdAt: number;
-    updatedAt?: number;
+    updatedAt: number;
 }
 
 export type Kind = "residence" | "commerce";
