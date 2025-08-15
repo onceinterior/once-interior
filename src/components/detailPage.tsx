@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ExtendingDivider from "@/components/extendingDivider";
 
 export interface DetailItem {
     id: number | string;
@@ -53,13 +54,13 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
             </div>
 
             {/* 썸네일 + 타이틀 */}
-            <div className="mb-6 flex flex-col items-center space-y-4">
+            <div className="mb-6 flex flex-col items-center space-y-7">
                 <div className="relative">
                     <Image
                         src={item.thumbnailUrl}
                         alt={item.title}
-                        height={300}
-                        width={300}
+                        height={600}
+                        width={600}
                         className="object-cover rounded"
                     />
                 </div>
@@ -67,7 +68,7 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
             </div>
 
             {/* 구분선 */}
-            <div className="w-28 h-1 bg-gray-400 rounded-xl mb-6 mx-auto" />
+            <ExtendingDivider />
 
             {/* 본문 이미지들 */}
             <div className="flex flex-col space-y-5 justify-center pt-5 items-center">
