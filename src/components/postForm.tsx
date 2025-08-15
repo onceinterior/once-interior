@@ -277,7 +277,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     )}
                 </div>
                 {/* 썸네일 업로딩 스핀 */}
-                {uploadingThumb && <LoadingSpinner />}
+                {uploadingThumb && <LoadingSpinner color={"#2563EB"}/>}
 
                 {/* 썸네일 미리보기 */}
                 {thumbnailUrl && (
@@ -309,9 +309,9 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 >
                     이미지 선택
                 </label>
-                {uploadingMain && <LoadingSpinner />}
+                {uploadingMain && <LoadingSpinner color={"#2563EB"} />}
 
-                {mainImageUrls.length > 0 ? (
+                {mainImageUrls.length > 0 && (
                     <div className="w-100 space-y-3">
                         {mainImageUrls.map((url) => (
                             <div key={url} className="relative rounded-lg border overflow-hidden">
@@ -327,7 +327,9 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                             </div>
                         ))}
                     </div>
-                ) : (
+                )}
+
+                {!uploadingMain && mainImageUrls.length == 0 && (
                     <div className="text-md text-gray-400">상세 이미지가 없습니다.</div>
                 )}
             </section>
