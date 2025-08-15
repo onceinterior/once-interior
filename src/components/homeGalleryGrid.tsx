@@ -6,6 +6,7 @@ import Link from 'next/link';
 import FadeUpWrapper from '@/components/fadeUpWrapper';
 import type { Kind, Post } from '@/data/type';
 import { getRecentPosts } from '@/lib/api';
+import {shuffle} from "@/util/shuffle";
 
 type HomeItem = Post & { kind: Kind };
 
@@ -27,15 +28,13 @@ export default function HomeGalleryGrid() {
 
                 if (cancelled) return;
 
-                // kind 정보를 붙여 하나의 배열로 합치기
+                // 하나의 배열로 합치기
                 const merged: HomeItem[] = [
                     ...residence.map(p => ({ ...p, kind: 'residence' as const })),
                     ...commerce.map(p => ({ ...p, kind: 'commerce' as const })),
                 ];
 
-                // kind 구분 없이 섞기
-                merged.sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
-
+                shuffle(merged);
                 setItems(merged);
             } catch (e) {
                 console.error(e);
