@@ -20,9 +20,35 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
             <div>
                 <Link
                     href={backHref}
-                    className="bg-[#666666] text-white p-2 rounded-lg hover:bg-[#777777] hover:cursor-pointer"
+                    className="group inline-flex items-center gap-3 text-gray-700"
                 >
-                    ⬅ 목록으로
+                    <svg
+                        viewBox="0 0 60 12"
+                        className="h-3 w-14 overflow-visible"
+                        aria-hidden="true"
+                    >
+                        {/* 직선 */}
+                        <line
+                            x1="2"
+                            y1="6"
+                            x2="58"
+                            y2="6"
+                            className="stroke-gray-700 transition-transform duration-200 ease-out group-hover:-translate-x-1"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                        />
+                        {/* 위쪽 화살촉 */}
+                        <polyline
+                            points="10,2 2,6 10,10"
+                            className="fill-none stroke-gray-700 transition-transform duration-200 ease-out group-hover:-translate-x-1"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+
+                    {/* 텍스트 */}
+                    <span className="text-lg font-bold tracking-tight">목록으로</span>
                 </Link>
             </div>
 
