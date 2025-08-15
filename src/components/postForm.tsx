@@ -13,6 +13,7 @@ import {
     insertImageToStorage,
     deleteImageFromStorage,
 } from '@/lib/api';
+import LoadingSpinner from './loadingSpinner';
 
 type Mode = 'create' | 'edit';
 
@@ -265,7 +266,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     >
                         이미지 선택
                     </label>
-                    {uploadingThumb && <p className="text-gray-500 text-sm">업로드 중...</p>}
+
                     {thumbnailUrl && (
                         <button
                             onClick={handleRemoveThumbnail}
@@ -275,13 +276,18 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                         </button>
                     )}
                 </div>
+                {/* 썸네일 업로딩 스핀 */}
+                {uploadingThumb && <LoadingSpinner />}
 
                 {/* 썸네일 미리보기 */}
-                {thumbnailUrl ? (
+                {thumbnailUrl && (
                     <div className="overflow-hidden">
                         <Image src={thumbnailUrl} alt={thumbnailUrl} width={400} height={300} className="object-cover" />
                     </div>
-                ) : (
+                )}
+
+                {/* 썸네일 없을 때 */}
+                {!uploadingThumb && !thumbnailUrl && (
                     <div className="text-md text-gray-400">썸네일을 등록해주세요.</div>
                 )}
             </section>
@@ -303,7 +309,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 >
                     이미지 선택
                 </label>
-                {uploadingMain && <p className="text-gray-500 text-sm">업로드 중...</p>}
+                {uploadingMain && <LoadingSpinner />}
 
                 {mainImageUrls.length > 0 ? (
                     <div className="w-100 space-y-3">

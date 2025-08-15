@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import {logout, observeAuthState} from "@/lib/api";
 import {useEffect, useState} from "react";
+import LoadingSpinner from "@/components/loadingSpinner";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="w-10 h-10 border-4 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                <LoadingSpinner />
             </div>
         );
     }
