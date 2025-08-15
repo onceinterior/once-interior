@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ExtendingDivider from "@/components/extendingDivider";
+import FadeUpWrapper from "@/components/fadeUpWrapper";
 
 export interface DetailItem {
     id: number | string;
@@ -73,15 +74,17 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
             {/* 본문 이미지들 */}
             <div className="flex flex-col space-y-5 justify-center pt-5 items-center">
                 {item.imageUrls?.map((img, i) => (
-                    <div key={i} className="relative">
-                        <Image
-                            src={img}
-                            alt={`${item.title} - ${i + 1}`}
-                            height={400}
-                            width={500}
-                            className="object-cover rounded-xl"
-                        />
-                    </div>
+                    <FadeUpWrapper key={i}>
+                        <div key={i} className="relative">
+                            <Image
+                                src={img}
+                                alt={`${item.title} - ${i + 1}`}
+                                height={400}
+                                width={500}
+                                className="object-cover rounded-xl"
+                            />
+                        </div>
+                    </FadeUpWrapper>
                 ))}
             </div>
         </div>
