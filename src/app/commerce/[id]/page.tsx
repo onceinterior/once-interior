@@ -3,9 +3,9 @@ import DetailPage from "@/components/detailPage";
 import {getPost} from "@/lib/api";
 import {Kind} from "@/data/type";
 
-interface Props {
-    params: {  id: string };
-}
+type Props = {
+    params: Promise<{ id: string }>;
+};
 
 export default async function CommerceDetail({ params }: Props) {
     const { id } = await params;
