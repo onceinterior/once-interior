@@ -60,8 +60,8 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
                     <Image
                         src={item.thumbnailUrl}
                         alt={item.title}
-                        height={600}
-                        width={600}
+                        height={350}
+                        width={500}
                         className="object-cover rounded"
                     />
                 </div>
@@ -79,7 +79,7 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
                             <Image
                                 src={img}
                                 alt={`${item.title} - ${i + 1}`}
-                                height={400}
+                                height={350}
                                 width={500}
                                 className="object-cover rounded-xl"
                             />
