@@ -373,12 +373,53 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     이미지 선택
                 </label>
 
+                {/* (수정모드) 기존 이미지들 미리보기 */}
+                {isEdit && originalMainUrls.length > 0 && (
+                    <div className="flex flex-col gap-3">
+                        {originalMainUrls.map((url) => {
+                            const removed = removedOriginalMainUrls.has(url);
+                            return (
+                                <div
+                                    key={url}
+                                    className={`relative rounded-lg border overflow-hidden ${removed ? 'opacity-40' : ''}`}
+                                >
+                                    <Image
+                                        src={url}
+                                        alt="original-main"
+                                        width={1200}     // 아무 값(비율 용). 실제로는 컨테이너 폭에 맞게 줄어듦
+                                        height={800}
+                                        className="w-full h-auto object-cover"  // 가로폭 채우고 세로는 자동
+                                    />
+                                    <div className="absolute inset-x-0 top-0 p-2 text-white text-xs flex items-center justify-end">
+                                        {!removed ? (
+                                            <button
+                                                onClick={() => onRemoveOriginalMain(url)}
+                                                className="px-3 py-2 rounded bg-red-500/20 hover:bg-red-600/30 hover:cursor-pointer"
+                                            >
+                                                삭제
+                                            </button>
+                                        ) : (
+                                            <span className="px-3 py-2 rounded bg-gray-700/50">삭제예정</span>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+
                 {/* 새로 고른 이미지들 미리보기 */}
                 {mainPreviews.length > 0 && (
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="flex flex-col gap-3">
                         {mainPreviews.map((url, i) => (
                             <div key={url} className="relative rounded-lg border overflow-hidden">
-                                <Image src={url} alt={`new-${i}`} width={400} height={300} className="object-cover" />
+                                <Image
+                                    src={url}
+                                    alt={`new-${i}`}
+                                    width={1200}         // 임의 비율용 값
+                                    height={800}
+                                    className="w-full h-auto object-cover"  // 가로폭에 맞춰 세로 자동
+                                />
                                 <div className="absolute inset-x-0 top-0 p-2 text-white text-xs flex items-center justify-end">
                                     <button
                                         onClick={() => onRemovePickedMain(i)}
@@ -392,31 +433,6 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     </div>
                 )}
 
-                {/* (수정모드) 기존 이미지들 미리보기 */}
-                {isEdit && originalMainUrls.length > 0 && (
-                    <div className="grid grid-cols-2 gap-3">
-                        {originalMainUrls.map((url) => {
-                            const removed = removedOriginalMainUrls.has(url);
-                            return (
-                                <div key={url} className={`relative rounded-lg border overflow-hidden ${removed ? 'opacity-40' : ''}`}>
-                                    <Image src={url} alt="original-main" width={400} height={300} className="object-cover" />
-                                    <div className="absolute inset-x-0 top-0 p-2 text-white text-xs flex items-center justify-end">
-                                        {!removed ? (
-                                            <button
-                                                onClick={() => onRemoveOriginalMain(url)}
-                                                className="px-2 py-1 rounded bg-red-500/20 hover:bg-red-600/30 hover:cursor-pointer"
-                                            >
-                                                삭제
-                                            </button>
-                                        ) : (
-                                            <span className="px-2 py-1 rounded bg-gray-700/50">삭제예정</span>
-                                        )}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
 
                 {/* 아무것도 없을 때 */}
                 {!isEdit && mainPreviews.length === 0 && (
