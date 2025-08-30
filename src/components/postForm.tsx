@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ import {
     insertImageToStorage,
     deleteImageFromStorage,
 } from '@/lib/api';
+import { constructVersionedFileName } from "@/util/version";
 
 type Mode = 'create' | 'edit';
 
@@ -40,7 +41,9 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
     const [originalThumbUrl, setOriginalThumbUrl] = useState<string>('');
     const [removeOriginalThumb, setRemoveOriginalThumb] = useState(false);
     const [thumbFile, setThumbFile] = useState<File | null>(null);
-    const [thumbPreview, setThumbPreview] = useState<string>(''); // Object URL
+    const [thumbPreview, setThumbPreview] = useState<string>('');
+    const [thumbPreviewVer, setThumbPreviewVer] = useState(0);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // === 본문 BEFORE 이미지 (저장 시 업로드) ===
     const [originalBeforeUrls, setOriginalBeforeUrls] = useState<string[]>([]);
@@ -101,7 +104,12 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
         };
     }, [thumbPreview, beforePreviews, afterPreviews]);
 
-    // ====== 핸들러: 썸네일 선택/취소 ======
+    function onPickThumbFromInput(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0] ?? null;
+        onPickThumb(file);
+        e.currentTarget.value = '';
+    }
+
     function onPickThumb(file: File | null) {
         if (thumbPreview) URL.revokeObjectURL(thumbPreview);
 
@@ -113,6 +121,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
         }
         setThumbFile(file);
         setThumbPreview(URL.createObjectURL(file));
+        setThumbPreviewVer(v => v + 1);
         if (originalThumbUrl) setRemoveOriginalThumb(true);
     }
 
@@ -120,6 +129,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
         if (thumbPreview) URL.revokeObjectURL(thumbPreview);
         setThumbFile(null);
         setThumbPreview('');
+        setThumbPreviewVer(v => v + 1);
         setRemoveOriginalThumb(false);
     }
 
@@ -205,7 +215,12 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
             // 1) 썸네일 업로드(or 유지/삭제)
             let finalThumbUrl = originalThumbUrl;
             if (thumbFile) {
-                finalThumbUrl = await insertImageToStorage(kind, postId, 'thumbnail', thumbFile);
+                const renamedThumb = new File(
+                    [thumbFile],
+                    constructVersionedFileName(thumbFile.name),
+                    { type: thumbFile.type }
+                );
+                finalThumbUrl = await insertImageToStorage(kind, postId, 'thumbnail', renamedThumb);
             } else if (removeOriginalThumb) {
                 finalThumbUrl = '';
             }
@@ -214,7 +229,8 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
             const keptOriginalBefore = originalBeforeUrls.filter((u) => !removedOriginalBeforeUrls.has(u));
             const uploadedBefore: string[] = [];
             for (const f of beforeFiles) {
-                const url = await insertImageToStorage(kind, postId, 'before', f);
+                const renamed = new File([f], constructVersionedFileName(f.name), { type: f.type });
+                const url = await insertImageToStorage(kind, postId, 'before', renamed);
                 uploadedBefore.push(url);
             }
             const finalBeforeUrls = [...keptOriginalBefore, ...uploadedBefore];
@@ -223,7 +239,8 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
             const keptOriginalAfter = originalAfterUrls.filter((u) => !removedOriginalAfterUrls.has(u));
             const uploadedAfter: string[] = [];
             for (const f of afterFiles) {
-                const url = await insertImageToStorage(kind, postId, 'after', f);
+                const renamed = new File([f], constructVersionedFileName(f.name), { type: f.type });
+                const url = await insertImageToStorage(kind, postId, 'after', renamed);
                 uploadedAfter.push(url);
             }
             const finalAfterUrls = [...keptOriginalAfter, ...uploadedAfter];
@@ -357,10 +374,11 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 <label className="block text-md font-medium">썸네일</label>
                 <div className="flex items-center gap-3">
                     <input
+                        ref={fileInputRef}
                         id="thumbUpload"
                         type="file"
                         accept="image/*"
-                        onChange={(e) => onPickThumb(e.target.files?.[0] ?? null)}
+                        onChange={onPickThumbFromInput}
                         className="hidden"
                     />
                     <label
@@ -391,11 +409,11 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
 
                 {thumbPreview ? (
                     <div className="overflow-hidden">
-                        <Image src={thumbPreview} alt="thumb-preview" width={400} height={300} className="object-cover" />
+                        <Image key={`thumb-${thumbPreviewVer}`} src={thumbPreview} alt="thumb-preview" width={400} height={300} className="object-cover" />
                     </div>
                 ) : (isEdit && originalThumbUrl && !removeOriginalThumb) ? (
                     <div className="overflow-hidden">
-                        <Image src={originalThumbUrl} alt="thumb-original" width={400} height={300} className="object-cover" />
+                        <Image key={`thumb-orig-${thumbPreviewVer}`} src={originalThumbUrl} alt="thumb-original" width={400} height={300} className="object-cover" />
                     </div>
                 ) : (
                     <div className="text-md text-gray-400">썸네일을 등록해주세요.</div>
