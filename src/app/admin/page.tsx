@@ -37,7 +37,7 @@ export default function AdminPage() {
         setDeletingId(post.id);
         try {
             // 1) Storage 이미지들 먼저 삭제
-            const allUrls = [post.thumbnailUrl, ...(post.imageUrls || [])];
+            const allUrls = [post.thumbnailUrl, ...(post.beforeImageUrls || [])];
             await Promise.all(allUrls.map((url) => deleteImageFromStorage(url)));
 
             // 2) Firestore 문서 삭제
@@ -122,7 +122,7 @@ export default function AdminPage() {
 
                             {/* 메인 이미지 */}
                             <div className="flex gap-2 mt-2 overflow-x-auto">
-                                {item.imageUrls.slice(0, 3).map((url, i) => (
+                                {item.beforeImageUrls.slice(0, 3).map((url, i) => (
                                     <div key={i} className="relative w-16 h-16 flex-shrink-0">
                                         <Image
                                             src={url}
@@ -132,9 +132,9 @@ export default function AdminPage() {
                                         />
                                     </div>
                                 ))}
-                                {item.imageUrls.length > 3 && (
+                                {item.beforeImageUrls.length > 3 && (
                                     <span className="text-sm text-gray-500 self-center">
-                                        +{item.imageUrls.length - 3} more
+                                        +{item.beforeImageUrls.length - 3} more
                                     </span>
                                 )}
                             </div>

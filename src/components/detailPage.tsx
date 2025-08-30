@@ -68,7 +68,7 @@ export default function DetailPage({ backHref, post }: DetailPageProps) {
 
             {/* 본문 이미지들 */}
             <div className="flex flex-col space-y-5 justify-center pt-5 items-center">
-                {post.imageUrls?.map((img, i) => (
+                {post.beforeImageUrls?.map((img, i) => (
                     <FadeUpWrapper key={i}>
                         <div key={i} className="relative">
                             <Image
