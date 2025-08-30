@@ -43,7 +43,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
     const [thumbFile, setThumbFile] = useState<File | null>(null);
     const [thumbPreview, setThumbPreview] = useState<string>('');
     const [thumbPreviewVer, setThumbPreviewVer] = useState(0);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const thumbInputRef = useRef<HTMLInputElement>(null);
 
     // === 본문 BEFORE 이미지 (저장 시 업로드) ===
     const [originalBeforeUrls, setOriginalBeforeUrls] = useState<string[]>([]);
@@ -374,7 +374,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 <label className="block text-md font-medium">썸네일</label>
                 <div className="flex items-center gap-3">
                     <input
-                        ref={fileInputRef}
+                        ref={thumbInputRef}
                         id="thumbUpload"
                         type="file"
                         accept="image/*"
