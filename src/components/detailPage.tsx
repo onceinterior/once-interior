@@ -60,27 +60,46 @@ export default function DetailPage({ backHref, post }: DetailPageProps) {
                     />
                 </div>
                 <h1 className="text-4xl font-bold">{post.title}</h1>
-                <p className="text-2xl">{post.address}</p>
+                <p className="text-xl">{post.address}</p>
             </div>
 
             {/* 구분선 */}
             <ExtendingDivider />
 
             {/* 본문 이미지들 */}
-            <div className="flex flex-col space-y-5 justify-center pt-5 items-center">
-                {post.beforeImageUrls?.map((img, i) => (
-                    <FadeUpWrapper key={i}>
-                        <div key={i} className="relative">
-                            <Image
-                                src={img}
-                                alt={`${post.title} - ${i + 1}`}
-                                height={350}
-                                width={500}
-                                className="object-cover rounded-xl"
-                            />
-                        </div>
-                    </FadeUpWrapper>
-                ))}
+            <div className="flex flex-col space-y-8 justify-center pt-5 items-center">
+                <div className="flex-col space-y-3">
+                    <h3 className="mb-5 text-xl font-semibold"> Before </h3>
+                    {post.beforeImageUrls?.map((img, i) => (
+                        <FadeUpWrapper key={i}>
+                            <div key={i} className="relative">
+                                <Image
+                                    src={img}
+                                    alt={`${post.title} - ${i + 1}`}
+                                    height={350}
+                                    width={500}
+                                    className="object-cover rounded-xl"
+                                />
+                            </div>
+                        </FadeUpWrapper>
+                    ))}
+                </div>
+                <div className="flex-col space-y-3">
+                    <h3 className="mb-5 text-xl font-semibold"> After </h3>
+                    {post.afterImageUrls?.map((img, i) => (
+                        <FadeUpWrapper key={i}>
+                            <div key={i} className="relative">
+                                <Image
+                                    src={img}
+                                    alt={`${post.title} - ${i + 1}`}
+                                    height={350}
+                                    width={500}
+                                    className="object-cover rounded-xl"
+                                />
+                            </div>
+                        </FadeUpWrapper>
+                    ))}
+                </div>
             </div>
         </div>
     );
