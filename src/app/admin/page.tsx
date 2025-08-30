@@ -11,7 +11,7 @@ import { getPosts, deletePost, deleteImageFromStorage } from "@/lib/api";
 
 export default function AdminPage() {
     const [mode, setMode] = useState<Kind>("commerce");
-    const [items, setItems] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(false);
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -21,7 +21,7 @@ export default function AdminPage() {
             setLoading(true);
             try {
                 const posts = await getPosts(mode); // orderBy("createdAt","desc")
-                setItems(posts);
+                setPosts(posts);
             } catch (e) {
                 console.error(e);
             } finally {
@@ -37,14 +37,14 @@ export default function AdminPage() {
         setDeletingId(post.id);
         try {
             // 1) Storage 이미지들 먼저 삭제
-            const allUrls = [post.thumbnailUrl, ...(post.imageUrls || [])];
+            const allUrls = [post.thumbnailUrl, ...(post.beforeImageUrls || [])];
             await Promise.all(allUrls.map((url) => deleteImageFromStorage(url)));
 
             // 2) Firestore 문서 삭제
             await deletePost(mode, post.id);
 
             // 3) UI 반영
-            setItems((prev) => prev.filter((p) => p.id !== post.id));
+            setPosts((prev) => prev.filter((p) => p.id !== post.id));
             toast.success("삭제되었습니다.");
         } catch (e) {
             console.error(e);
@@ -90,20 +90,20 @@ export default function AdminPage() {
             {/* 리스트 */}
             <div className="space-y-4">
                 {loading && <div className="text-gray-500">불러오는 중...</div>}
-                {!loading && items.length === 0 && (
+                {!loading && posts.length === 0 && (
                     <div className="text-gray-500">등록된 공간이 없습니다.</div>
                 )}
 
-                {items.map((item) => (
+                {posts.map((post) => (
                     <div
-                        key={item.id}
+                        key={post.id}
                         className="flex flex-col md:flex-row items-start md:items-center gap-4 p-4 border rounded-lg"
                     >
                         {/* 썸네일 */}
                         <div className="relative w-24 h-24 flex-shrink-0">
                             <Image
-                                src={item.thumbnailUrl}
-                                alt={item.title}
+                                src={post.thumbnailUrl}
+                                alt={post.title}
                                 fill
                                 className="object-cover rounded"
                             />
@@ -112,17 +112,17 @@ export default function AdminPage() {
                         {/* 제목 & 생성일/수정일 & 메인 이미지 */}
                         <div className="flex-1">
                             {/* 제목 */}
-                            <p className="font-bold">{item.title}</p>
+                            <p className="font-bold">{post.title}</p>
 
                             {/* 생성일/수정일 */}
                             <div className="text-xs text-gray-500 mt-1 space-x-3">
-                                <span>생성일: {new Date(item.createdAt).toLocaleString()}</span>
-                                <span>수정일: {new Date(item.updatedAt).toLocaleString()}</span>
+                                <span>생성일: {new Date(post.createdAt).toLocaleString()}</span>
+                                <span>수정일: {new Date(post.updatedAt).toLocaleString()}</span>
                             </div>
 
                             {/* 메인 이미지 */}
                             <div className="flex gap-2 mt-2 overflow-x-auto">
-                                {item.imageUrls.slice(0, 3).map((url, i) => (
+                                {post.afterImageUrls.slice(0, 3).map((url, i) => (
                                     <div key={i} className="relative w-16 h-16 flex-shrink-0">
                                         <Image
                                             src={url}
@@ -132,9 +132,9 @@ export default function AdminPage() {
                                         />
                                     </div>
                                 ))}
-                                {item.imageUrls.length > 3 && (
+                                {post.afterImageUrls.length > 3 && (
                                     <span className="text-sm text-gray-500 self-center">
-                                        +{item.imageUrls.length - 3} more
+                                        + {post.afterImageUrls.length - 3} more
                                     </span>
                                 )}
                             </div>
@@ -143,7 +143,7 @@ export default function AdminPage() {
                         {/* 액션: 데스크톱은 오른쪽, 모바일은 아래로 */}
                         <div className="flex gap-2 justify-end md:justify-start flex-shrink-0 md:self-center md:ml-2 mt-3 md:mt-0">
                             <Link
-                                href={`/admin/edit/${mode}/${item.id}`}
+                                href={`/admin/edit/${mode}/${post.id}`}
                                 className="p-2 rounded-full hover:bg-blue-100"
                                 title="수정"
                             >
@@ -151,8 +151,8 @@ export default function AdminPage() {
                             </Link>
 
                             <button
-                                onClick={() => handleDelete(item)}
-                                disabled={deletingId === item.id}
+                                onClick={() => handleDelete(post)}
+                                disabled={deletingId === post.id}
                                 className="p-2 rounded-full hover:bg-red-100 disabled:opacity-50"
                                 title="삭제"
                             >

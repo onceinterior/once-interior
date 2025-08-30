@@ -1,8 +1,10 @@
 export interface Post {
     id: string;
     title: string;
+    address: string;
     thumbnailUrl: string;
-    imageUrls: string[];
+    beforeImageUrls: string[];
+    afterImageUrls: string[];
     createdAt: number;
     updatedAt: number;
 }

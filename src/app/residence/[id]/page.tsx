@@ -9,9 +9,9 @@ type Props = {
 
 export default async function ResidenceDetail({ params }: Props) {
     const { id } = await params;
-    const item = await getPost("residence" as Kind, id);
+    const post = await getPost("residence" as Kind, id);
 
-    if (!item) return notFound();
+    if (!post) return notFound();
 
-    return <DetailPage backHref="/residence" item={item} />;
+    return <DetailPage backHref="/residence" post={post} />;
 }

@@ -6,6 +6,7 @@ import {
 import {deleteObject, getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {onAuthStateChanged, signInWithEmailAndPassword, signOut, User} from "firebase/auth";
 import {Kind, Post} from "@/data/type";
+import {FirebaseError} from "@firebase/app";
 
 const postsCol = (kind: Kind) => collection(db, "kinds", kind, "posts");
 
@@ -49,10 +50,17 @@ export async function insertImageToStorage(kind: Kind, postId: string, part: str
 }
 
 export async function deleteImageFromStorage(imageUrl: string): Promise<void> {
-    const url = new URL(imageUrl);
-    const path = decodeURIComponent(url.pathname.split("/o/")[1].split("?")[0]);
-    const imageRef = ref(storage, path);
-    await deleteObject(imageRef);
+    try {
+        const url = new URL(imageUrl);
+        const path = decodeURIComponent(url.pathname.split("/o/")[1].split("?")[0]);
+        const imageRef = ref(storage, path);
+        await deleteObject(imageRef);
+    } catch (error) {
+        if (error instanceof FirebaseError && error.code === "storage/object-not-found") {
+            return;
+        }
+        throw error;
+    }
 }
 
 export async function login(email: string, password: string) {
