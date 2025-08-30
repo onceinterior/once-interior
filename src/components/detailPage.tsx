@@ -2,20 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import ExtendingDivider from "@/components/extendingDivider";
 import FadeUpWrapper from "@/components/fadeUpWrapper";
-
-export interface DetailItem {
-    id: number | string;
-    title: string;
-    thumbnailUrl: string;
-    imageUrls?: string[];
-}
+import {Post} from "@/data/type";
 
 interface DetailPageProps {
     backHref: string;
-    item: DetailItem;
+    post: Post;
 }
 
-export default function DetailPage({ backHref, item }: DetailPageProps) {
+export default function DetailPage({ backHref, post }: DetailPageProps) {
     return (
         <div className="max-w-4xl mx-auto px-4 py-20 space-y-10">
             {/* 목록으로 */}
@@ -58,14 +52,15 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
             <div className="mb-6 flex flex-col items-center space-y-7">
                 <div className="relative">
                     <Image
-                        src={item.thumbnailUrl}
-                        alt={item.title}
+                        src={post.thumbnailUrl}
+                        alt={post.title}
                         height={350}
                         width={500}
                         className="object-cover rounded"
                     />
                 </div>
-                <h1 className="text-4xl font-bold">{item.title}</h1>
+                <h1 className="text-4xl font-bold">{post.title}</h1>
+                <p className="text-2xl">{post.address}</p>
             </div>
 
             {/* 구분선 */}
@@ -73,12 +68,12 @@ export default function DetailPage({ backHref, item }: DetailPageProps) {
 
             {/* 본문 이미지들 */}
             <div className="flex flex-col space-y-5 justify-center pt-5 items-center">
-                {item.imageUrls?.map((img, i) => (
+                {post.imageUrls?.map((img, i) => (
                     <FadeUpWrapper key={i}>
                         <div key={i} className="relative">
                             <Image
                                 src={img}
-                                alt={`${item.title} - ${i + 1}`}
+                                alt={`${post.title} - ${i + 1}`}
                                 height={350}
                                 width={500}
                                 className="object-cover rounded-xl"

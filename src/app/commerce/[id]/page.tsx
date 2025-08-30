@@ -9,9 +9,9 @@ type Props = {
 
 export default async function CommerceDetail({ params }: Props) {
     const { id } = await params;
-    const item = await getPost("commerce" as Kind, id);
+    const post = await getPost("commerce" as Kind, id);
 
-    if (!item) return notFound();
+    if (!post) return notFound();
 
-    return <DetailPage backHref="/commerce" item={item} />;
+    return <DetailPage backHref="/commerce" post={post} />;
 }

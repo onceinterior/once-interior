@@ -13,7 +13,6 @@ import {
     insertImageToStorage,
     deleteImageFromStorage,
 } from '@/lib/api';
-import LoadingSpinner from './loadingSpinner';
 
 type Mode = 'create' | 'edit';
 
@@ -35,6 +34,7 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
 
     // 공통 상태
     const [postTitle, setPostTitle] = useState('');
+    const [postAddress, setPostAddress] = useState('');
 
     // === 썸네일 (저장 시 업로드) ===
     // 편집 중 원본(있을 수도 있음)
@@ -165,6 +165,10 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
             toast.error('제목을 입력하세요.');
             return false;
         }
+        if (!postAddress.trim()) {
+            toast.error('주소를 입력하세요.');
+            return false;
+        }
         if (!hasThumb) {
             toast.error('썸네일을 등록하세요.');
             return false;
@@ -202,7 +206,8 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                 // CREATE
                 const newPost: Post = {
                     id: postId,
-                    title: postTitle.trim(),
+                    title: postTitle,
+                    address: postAddress,
                     thumbnailUrl: finalThumbUrl,
                     imageUrls: finalMainUrls,
                     createdAt: now,
@@ -216,10 +221,10 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     return;
                 }
                 await updatePost(kind, postId, {
-                    title: postTitle.trim(),
+                    title: postTitle,
+                    address: postAddress,
                     thumbnailUrl: finalThumbUrl,
                     imageUrls: finalMainUrls,
-                    // updatedAt은 updatePost 내부에서 처리한다고 가정
                 });
             }
 
@@ -299,6 +304,18 @@ export default function PostForm({ kind, mode = 'create', postIdForEdit }: PostF
                     placeholder="제목"
                     value={postTitle}
                     onChange={(e) => setPostTitle(e.target.value)}
+                />
+            </section>
+
+            {/* 1) 주소 */}
+            <section className="space-y-2">
+                <label className="block text-md font-medium">주소</label>
+                <input
+                    type="text"
+                    className="border p-2 w-full rounded"
+                    placeholder="주소"
+                    value={postAddress}
+                    onChange={(e) => setPostAddress(e.target.value)}
                 />
             </section>
 
