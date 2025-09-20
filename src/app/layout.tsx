@@ -2,7 +2,7 @@ import './globals.css'
 import { ReactNode } from 'react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import ConsultHoverButton from "@/components/hover-button";
+import ConsultHoverButton from "@/components/hoverButton";
 
 export const metadata = {
     title: '원스인테리어',

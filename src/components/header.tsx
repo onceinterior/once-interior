@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import {BlogHeader, KakaoHeader} from "@/components/contact-header";
+import {BlogHeader, KakaoHeader} from "@/components/contactHeader";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);

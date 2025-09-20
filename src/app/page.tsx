@@ -1,10 +1,9 @@
 import Image from "next/image";
-import {residenceGalleryItems} from "@/data/residenceData";
-import {commerceGalleryItems} from "@/data/commerceData";
-import FadeUpWrapper from "@/components/fade-up-animation";
+
+import FadeUpWrapper from "@/components/fadeUpWrapper";
+import HomeGalleryGrid from "@/components/homeGalleryGrid";
 
 export default function Home() {
-    const combinedGalleryItems = [...residenceGalleryItems, ...commerceGalleryItems];
 
     return (
         <div>
@@ -37,22 +36,7 @@ export default function Home() {
                 {/* 구분선 */}
                 <div className="w-16 h-1 bg-[#444] mx-auto rounded-full"></div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {combinedGalleryItems.map((item, index) => (
-                        <FadeUpWrapper key={index} delay={index * 50}>
-                            <div key={index} className="group">
-                                <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
-                                    <Image
-                                        src={item.src}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover transition duration-300 group-hover:brightness-110"
-                                    />
-                                </div>
-                            </div>
-                        </FadeUpWrapper>
-                    ))}
-                </div>
+                <HomeGalleryGrid />
             </section>
 
             {/* Description Section */}
